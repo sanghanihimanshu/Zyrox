@@ -90,14 +90,14 @@ export function Documents() {
         <Spinner />
       ) : list.length ? (
         <Card className="divide-y divide-zinc-100 dark:divide-zinc-800">
-            {list.map((d) => (
-              <DocumentRow
-                key={d.id}
-                doc={d}
-                envs={environments.map((e) => e.key)}
-                projectSlug={project.slug}
-                canDelete={can(role, 'admin')}
-              />
+          {list.map((d) => (
+            <DocumentRow
+              key={d.id}
+              doc={d}
+              envs={environments.map((e) => e.key)}
+              projectSlug={project.slug}
+              canDelete={can(role, 'admin')}
+            />
           ))}
         </Card>
       ) : (

@@ -241,11 +241,7 @@ const OPS: [string, string, Op][] = [
     P,
     { summary: 'Update project settings', tag: 'Projects', role: 'admin', body: any, response: any },
   ],
-  [
-    'delete',
-    P,
-    { summary: 'Delete a project and its data', tag: 'Projects', role: 'admin', response: ok },
-  ],
+  ['delete', P, { summary: 'Delete a project and its data', tag: 'Projects', role: 'admin', response: ok }],
   [
     'patch',
     `${P}/environments/{env}`,

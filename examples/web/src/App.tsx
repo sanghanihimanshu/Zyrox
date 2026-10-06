@@ -1,4 +1,4 @@
-import { ZyroxProvider, ZyroxScreen, type Fetcher } from '@zyrox/react';
+import { type Fetcher, ZyroxProvider, ZyroxScreen } from '@zyrox/react';
 import { defaultOverlays } from '@zyrox/react/overlays';
 import { parsePreviewLink, ZyroxLivePreview, ZyroxPreviewHost } from '@zyrox/react/preview';
 import { createExampleRegistry, exampleStrings } from '@zyrox-examples/components';
@@ -37,7 +37,9 @@ export function App() {
       ) : (
         <main className="shop-shell">
           <header className="shop-header">
-            <a href="/" aria-label="Zyrox shop home">Zyrox shop</a>
+            <a href="/" aria-label="Zyrox shop home">
+              Zyrox shop
+            </a>
             <span>Live example</span>
           </header>
           <ZyroxScreen

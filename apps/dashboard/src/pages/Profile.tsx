@@ -10,8 +10,8 @@ export function Profile() {
   const toast = useToast();
   const [name, setName] = useState('');
   useEffect(() => {
-    if (me.data) setName(me.data.user.name);
-  }, [me.data?.user.name]);
+    if (me?.data) setName(me.data.user.name);
+  }, [me?.data?.user.name, me.data]);
   const save = useMutation({
     mutationFn: () => patch('/me', { name: name.trim() }),
     onSuccess: async () => {
