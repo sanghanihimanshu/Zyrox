@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { Blocks, FilePlus2, LayoutTemplate, Search, Trash2 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { del, post } from '../lib/api';
 import { can, queryClient, useDocuments, useLatestManifest } from '../lib/queries';
@@ -200,6 +200,9 @@ function CreateDocument({
   const [key, setKey] = useState('');
   const [title, setTitle] = useState('');
   const [type, setType] = useState(kind);
+  useEffect(() => {
+    if (open) setType(kind);
+  }, [kind, open]);
   const [, navigate] = useLocation();
   const create = useMutation({
     mutationFn: () => post(`/projects/${project.slug}/documents`, { key, kind: type, title }),
