@@ -115,6 +115,7 @@ test('publish a block from the dashboard', async () => {
   await page.goto('/p/shop-app');
   await page.getByRole('tab', { name: 'Blocks' }).click();
   await page.getByRole('button', { name: 'New block' }).click();
+  await expect(page.getByLabel('Type')).toHaveValue('block');
   await page.getByLabel('Key').fill('promo-badge');
   await page.getByLabel('Title').fill('Promo badge');
   await page.getByRole('button', { name: 'Create' }).click();
