@@ -1,7 +1,16 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "files": {
-    "includes": ["**", "!**/node_modules", "!**/dist", "!**/.turbo", "!**/drizzle/meta", "!**/*.gen.ts"]
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.turbo",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/drizzle/meta",
+      "!**/*.gen.ts"
+    ]
   },
   "formatter": {
     "enabled": true,

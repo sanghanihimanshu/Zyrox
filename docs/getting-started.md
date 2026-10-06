@@ -8,6 +8,7 @@ Use your hosted server URL or run the server locally. The local development comm
 
 ```bash
 pnpm install
+pnpm --filter @zyrox/dashboard build
 pnpm --filter @zyrox/server start
 ```
 
@@ -27,6 +28,8 @@ pnpm add -D @zyrox/cli
 ```
 
 For React Native, also install and configure React Native and its platform requirements. The example app and [Library guide](library.md) show the provider and registry setup.
+
+In the dashboard, open **Settings → Environments & keys** and copy the development public key. Configure the app's `ZyroxProvider` with that key and the server URL. Public environment keys belong in the app; never bundle an admin or CLI token.
 
 ## 4. Share component definitions with the CLI
 

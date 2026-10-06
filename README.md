@@ -14,7 +14,7 @@ Server-driven UI for **React** and **React Native**, with a server that delivers
 
 ## What you get
 
-- **Runtime** (`@zyrox/react`, ~23 KB gzipped): renders documents with your components on web and native, with state, two-way binding, declarative form validation, expressions, actions, sheets / alerts / toasts, data sources, templates for virtualized lists, motion, accessibility, error boundaries per node, and observers for any analytics or logging tool.
+- **Runtime** (`@zyrox/react`, ~30 KB gzipped before React): renders documents with your components on web and native, with state, two-way binding, declarative form validation, expressions, actions, sheets / alerts / toasts, data sources, templates for virtualized lists, motion, accessibility, error boundaries per node, and observers for any analytics or logging tool.
 - **Delivery built for mobile**: content-addressed documents cached forever, ETag-revalidated bootstrap, offline snapshot, the previous version shown while a new one downloads, retries and timeouts, first-frame rendering from MMKV/localStorage.
 - **Release control**: environments, publish = validate + compile, targeting rules, percentage rollouts, experiments, rollback, compatibility report against the app builds in use, health per version, audit log.
 - **Dashboard**: visual editor with your real components in the canvas, live preview on devices (QR), generated property forms, action builder, JSON mode, translations, releases, experiments, health.

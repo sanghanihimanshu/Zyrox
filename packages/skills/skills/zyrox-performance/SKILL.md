@@ -52,4 +52,4 @@ What the client does for you:
 
 - `observers` receive `screen_view`, `data_load` (`durationMs`, `cached`), `action` and `error` events: forward them to your APM to track time-to-data per screen.
 - `client.getDocument(key).source` tells whether a screen came from `snapshot`, `cache` or `network`.
-- The runtime is ~23 KB gzipped (`pnpm size` in the Zyrox repo guards the budget).
+- The app-facing runtime imports are about 30 KB gzipped before React; `pnpm size` guards a 35 KB budget.
