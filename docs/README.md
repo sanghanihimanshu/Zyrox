@@ -1,5 +1,7 @@
 # Zyrox docs
 
+- [Getting started](getting-started.md): connect an app, project, dashboard and first screen.
+- [CLI guide](cli.md): authenticate, upload manifests, manage documents and use CI.
 - [Library guide](library.md): add Zyrox to a React or React Native app.
 - [Dashboard guide](dashboard.md): manage profiles, projects, screens, blocks, and publishing.
 - [Package releases](releasing.md): publish the workspace packages to npm.

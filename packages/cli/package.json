@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Zyrox CLI: upload app manifests, sync documents as files, validate, and build offline snapshots.",
   "type": "module",
+  "files": [
+    "src",
+    "README.md"
+  ],
   "bin": {
     "zyrox": "./src/bin.ts"
   },

@@ -42,6 +42,8 @@ The example apps run without a server (bundled documents, in-process example bac
 
 | Guide | For |
 | --- | --- |
+| [Getting started](docs/getting-started.md) | Connect an app, project, dashboard and first screen |
+| [CLI guide](docs/cli.md) | Authentication, manifests, document sync, releases, snapshots and CI |
 | [Library guide](docs/library.md) | Adding Zyrox to a React or React Native app: components, provider, screens, data, actions, state, languages, motion, analytics, caching, testing |
 | [Self-hosting](docs/self-hosting.md) | Running the server and dashboard: Docker, Postgres, configuration, proxies and CDNs, scaling, backups, security, AI and translation |
 | [Dashboard guide](docs/dashboard.md) | Profiles, projects, screens, blocks, roles, and publishing |

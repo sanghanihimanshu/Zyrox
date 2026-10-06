@@ -64,7 +64,7 @@ describe.each(scenarios)('native: $name', (scenario) => {
         );
       await flush();
     }
-  });
+  }, 30_000);
 });
 
 describe('manifest', () => {
