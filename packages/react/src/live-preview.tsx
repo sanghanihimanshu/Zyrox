@@ -1,5 +1,5 @@
-import type { Observer } from '@zyrox/core';
-import type { Document } from '@zyrox/protocol';
+import type { Observer } from '@wishyor/zyrox-core';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { StableContext, useZyrox } from './context';
 import { getPlatform } from './platform-api';

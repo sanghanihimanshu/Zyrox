@@ -1,5 +1,5 @@
-import { applyOps, OpError } from '@zyrox/core';
-import { canonicalJson, type Document, type Manifest, opSchema, z } from '@zyrox/protocol';
+import { applyOps, OpError } from '@wishyor/zyrox-core';
+import { canonicalJson, type Document, type Manifest, opSchema, z } from '@wishyor/zyrox-protocol';
 import { and, desc, eq, inArray, isNull, sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { requireRole } from '../auth';

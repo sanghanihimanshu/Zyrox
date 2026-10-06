@@ -13,8 +13,8 @@ import {
   ScreenRuntime,
   type Snapshot,
   ZyroxClient,
-} from '@zyrox/core';
-import type { Document } from '@zyrox/protocol';
+} from '@wishyor/zyrox-core';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { type ReactNode, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { DynamicContext, StableContext, useZyrox, type ZyroxDynamic, type ZyroxStable } from './context';
 import { type OverlayComponents, OverlayHost } from './overlay-host';
@@ -80,7 +80,7 @@ export interface ZyroxProviderProps {
   /**
    * Translate missing keys at runtime with any model: on-device (ML Kit, Apple Translation),
    * your cloud, a function… Defaults to the Zyrox server's translation provider when it has
-   * runtime translation on. For plain-text models, `splitMessage` from `@zyrox/core` protects
+   * runtime translation on. For plain-text models, `splitMessage` from `@wishyor/zyrox-core` protects
    * placeholders and plurals.
    */
   translateMissing?: MissingTranslator;
@@ -92,7 +92,7 @@ export interface ZyroxProviderProps {
   // Overlays and backend-triggered UI -------------------------------------------------------------
   /**
    * Components for the `sheet`, `alert` and `toast` actions: `defaultOverlays` from
-   * `@zyrox/react/overlays`, or your design system's.
+   * `@wishyor/zyrox-react/overlays`, or your design system's.
    */
   overlays?: OverlayComponents;
   /**

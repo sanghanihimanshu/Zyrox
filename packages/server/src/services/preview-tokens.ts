@@ -1,5 +1,5 @@
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
-import { type Document, documentSchema } from '@zyrox/protocol';
+import { type Document, documentSchema } from '@wishyor/zyrox-protocol';
 import { and, eq, isNull } from 'drizzle-orm';
 import type { ServerContext } from '../context';
 import { documents, drafts } from '../db/schema';

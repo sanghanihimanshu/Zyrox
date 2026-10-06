@@ -1,5 +1,5 @@
-import type { DeviceInfo } from '@zyrox/core';
-import { isRtl } from '@zyrox/core';
+import type { DeviceInfo } from '@wishyor/zyrox-core';
+import { isRtl } from '@wishyor/zyrox-core';
 import { createElement, Fragment, type ReactNode, useMemo } from 'react';
 import { AppState, Linking, Platform as RNPlatform, useColorScheme, useWindowDimensions } from 'react-native';
 import type { Platform } from './platform-api';

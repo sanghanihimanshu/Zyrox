@@ -6,10 +6,10 @@ import {
   useZyroxActions,
   ZyroxProvider,
   ZyroxScreen,
-} from '@zyrox/react';
-import { defaultOverlays } from '@zyrox/react/overlays';
-import { type PreviewLink, parsePreviewLink, ZyroxLivePreview } from '@zyrox/react/preview';
-import { sseSource, type UiActionSource, ZyroxRemote } from '@zyrox/react/remote';
+} from '@wishyor/zyrox-react';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';
+import { type PreviewLink, parsePreviewLink, ZyroxLivePreview } from '@wishyor/zyrox-react/preview';
+import { sseSource, type UiActionSource, ZyroxRemote } from '@wishyor/zyrox-react/remote';
 import { createExampleRegistry, exampleStrings } from '@zyrox-examples/components';
 import { documents } from '@zyrox-examples/components/documents';
 import { handleShopRequest, orderUpdate, products, shopEvents } from '@zyrox-examples/shop-api';

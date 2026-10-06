@@ -1,8 +1,8 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
-import { ZyroxProvider, ZyroxScreen } from '@zyrox/react';
-import { defaultOverlays } from '@zyrox/react/overlays';
-import { ZyroxRemote } from '@zyrox/react/remote';
+import { ZyroxProvider, ZyroxScreen } from '@wishyor/zyrox-react';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';
+import { ZyroxRemote } from '@wishyor/zyrox-react/remote';
 import { documents } from '../documents';
 import { createExampleRegistry, exampleStrings } from '../src/index.native';
 import { scenarios } from './scenarios';
@@ -69,7 +69,7 @@ describe.each(scenarios)('native: $name', (scenario) => {
 
 describe('manifest', () => {
   it('the native registry reports the same manifest as web', () => {
-    const { buildManifest } = require('@zyrox/protocol');
+    const { buildManifest } = require('@wishyor/zyrox-protocol');
     const { exampleManifestInput } = require('../src/index.native');
     expect(createExampleRegistry().manifest.hash).toBe(buildManifest(exampleManifestInput).hash);
   });

@@ -1,4 +1,4 @@
-import type { OpenToast, OverlayButton, OverlayController } from '@zyrox/core';
+import type { OpenToast, OverlayButton, OverlayController } from '@wishyor/zyrox-core';
 import { type ComponentType, type ReactNode, useSyncExternalStore } from 'react';
 import { ZyroxScreen } from './screen';
 
@@ -37,7 +37,7 @@ export interface MessageProps {
 
 /**
  * How sheets, alerts and toasts look: your design system's components, or the defaults from
- * `@zyrox/react/overlays`.
+ * `@wishyor/zyrox-react/overlays`.
  */
 export interface OverlayComponents {
   Sheet: ComponentType<SheetProps>;

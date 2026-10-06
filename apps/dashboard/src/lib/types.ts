@@ -1,4 +1,4 @@
-import type { Document, Manifest } from '@zyrox/protocol';
+import type { Document, Manifest } from '@wishyor/zyrox-protocol';
 
 export type Role = 'viewer' | 'editor' | 'publisher' | 'admin';
 export type Kind = 'screen' | 'block' | 'strings';

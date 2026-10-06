@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, relative, resolve } from 'node:path';
-import type { Manifest } from '@zyrox/protocol';
+import type { Manifest } from '@wishyor/zyrox-protocol';
 import {
   type ComponentSpec,
   designSystemRules,
@@ -11,7 +11,7 @@ import {
   type PropSpec,
   type PropType,
   scaffoldComponent,
-} from '@zyrox/skills';
+} from '@wishyor/zyrox-skills';
 import type { Context } from './commands';
 import { resolveManifest } from './config';
 

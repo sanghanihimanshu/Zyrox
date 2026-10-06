@@ -1,4 +1,4 @@
-import type { Action, Document, HttpMethod, Value } from '@zyrox/protocol';
+import type { Action, Document, HttpMethod, Value } from '@wishyor/zyrox-protocol';
 import {
   type CompiledAction,
   type CompiledDataSource,
@@ -178,7 +178,7 @@ export interface RuntimeHost {
   back?(result?: unknown): void;
   openUrl?(url: string): unknown;
   actions?: Record<string, HostAction>;
-  /** Runs the `call` action. `@zyrox/react` wires this to the Zyrox server when an endpoint is set. */
+  /** Runs the `call` action. `@wishyor/zyrox-react` wires this to the Zyrox server when an endpoint is set. */
   callFunction?: FunctionCaller;
   /** Translations and the active locale, shared by all screens. Powers `t()` and `setLocale`. */
   i18n?: I18n;
@@ -321,7 +321,7 @@ const now = () => (typeof performance !== 'undefined' ? performance.now() : Date
 
 /**
  * Everything one mounted screen needs: its store, scope resolution, the action runner and its
- * data sources. Framework-agnostic; `@zyrox/react` renders on top of it.
+ * data sources. Framework-agnostic; `@wishyor/zyrox-react` renders on top of it.
  */
 export class ScreenRuntime {
   readonly doc: CompiledDocument;
@@ -866,7 +866,9 @@ export class ScreenRuntime {
 
   private overlays(): OverlayHost {
     if (!this.host.overlays)
-      throw new Error('No overlays: pass `overlays` to the provider (e.g. from "@zyrox/react/overlays")');
+      throw new Error(
+        'No overlays: pass `overlays` to the provider (e.g. from "@wishyor/zyrox-react/overlays")',
+      );
     return this.host.overlays;
   }
 

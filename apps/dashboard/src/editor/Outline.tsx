@@ -1,5 +1,5 @@
-import { findNode } from '@zyrox/core';
-import type { Document, Manifest, Node, Op, SlotRef } from '@zyrox/protocol';
+import { findNode } from '@wishyor/zyrox-core';
+import type { Document, Manifest, Node, Op, SlotRef } from '@wishyor/zyrox-protocol';
 import { ChevronDown, ChevronRight, Copy, Eye, Layers, Repeat, Trash2, Zap } from 'lucide-react';
 import { type DragEvent, useMemo, useState } from 'react';
 import { cx, IconButton, useToast } from '../ui';

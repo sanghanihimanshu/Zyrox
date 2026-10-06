@@ -1,5 +1,5 @@
-import type { Document, Manifest } from '@zyrox/protocol';
-import type { PreviewFrameMessage, PreviewHostMessage } from '@zyrox/react/preview';
+import type { Document, Manifest } from '@wishyor/zyrox-protocol';
+import type { PreviewFrameMessage, PreviewHostMessage } from '@wishyor/zyrox-react/preview';
 import { Monitor, MousePointer2, RotateCw, Smartphone, Tablet, TestTube2 } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { cx, IconButton } from '../ui';

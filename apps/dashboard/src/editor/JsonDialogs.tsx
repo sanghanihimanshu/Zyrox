@@ -1,7 +1,7 @@
 import { DiffEditor, Editor } from '@monaco-editor/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import type { Document } from '@zyrox/protocol';
-import { documentJsonSchema, documentSchema } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
+import { documentJsonSchema, documentSchema } from '@wishyor/zyrox-protocol';
 import { useState } from 'react';
 import { get, post } from '../lib/api';
 import { Badge, Button, cx, Dialog, errorMessage, timeAgo, useToast } from '../ui';

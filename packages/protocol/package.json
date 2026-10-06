@@ -1,5 +1,5 @@
 {
-  "name": "@zyrox/protocol",
+  "name": "@wishyor/zyrox-protocol",
   "version": "0.1.0",
   "description": "Zyrox server-driven UI protocol: document, node, action and op types, Zod schemas, component definitions and manifests.",
   "type": "module",

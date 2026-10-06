@@ -1,5 +1,5 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { placeholderRegistry } from '../../../apps/dashboard/src/preview/placeholders';
 import counterJson from '../../../examples/components/documents/counter.json';

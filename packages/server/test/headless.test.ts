@@ -1,6 +1,6 @@
 import { createServer, type IncomingMessage, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import { createZyroxServer, verifySignature, type ZyroxServer } from '../src';

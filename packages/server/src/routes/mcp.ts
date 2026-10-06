@@ -1,9 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { findNode, listNodes } from '@zyrox/core';
-import type { Problem } from '@zyrox/core/validate';
-import { type Document, type Manifest, type Node, z } from '@zyrox/protocol';
+import { findNode, listNodes } from '@wishyor/zyrox-core';
+import type { Problem } from '@wishyor/zyrox-core/validate';
+import { type Document, type Manifest, type Node, z } from '@wishyor/zyrox-protocol';
 import {
   componentProps,
   componentSignature,
@@ -12,7 +12,7 @@ import {
   PROP_TYPES,
   readSkill,
   scaffoldComponent,
-} from '@zyrox/skills';
+} from '@wishyor/zyrox-skills';
 import { Hono } from 'hono';
 import { currentUser } from '../auth';
 import type { AppEnv, ServerContext } from '../context';

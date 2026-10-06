@@ -1,4 +1,4 @@
-import { implementAction } from '@zyrox/react';
+import { implementAction } from '@wishyor/zyrox-react';
 import { AddToCartDef, RemoveFromCartDef } from './defs';
 
 export interface ExampleActionHandlers {

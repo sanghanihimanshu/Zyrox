@@ -1,4 +1,4 @@
-import { canonicalJson, hashString, type Manifest, manifestSchema, z } from '@zyrox/protocol';
+import { canonicalJson, hashString, type Manifest, manifestSchema, z } from '@wishyor/zyrox-protocol';
 import { and, desc, eq, gte, sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { requireRole } from '../auth';

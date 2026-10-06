@@ -1,5 +1,5 @@
-// UI the backend triggers in the app, with @zyrox/actions. Any backend can send the same JSON.
-import { trigger, UiChannel, type UiTrigger, ui, uiMessage, withActions } from '@zyrox/actions';
+// UI the backend triggers in the app, with @wishyor/zyrox-actions. Any backend can send the same JSON.
+import { trigger, UiChannel, type UiTrigger, ui, uiMessage, withActions } from '@wishyor/zyrox-actions';
 import { ShopError } from './api';
 
 const COUPONS: Record<string, string> = {

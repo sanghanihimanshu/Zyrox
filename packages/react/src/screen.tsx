@@ -4,9 +4,9 @@ import {
   type Observer,
   type RuntimeHost,
   ScreenRuntime,
-} from '@zyrox/core';
-import type { Document } from '@zyrox/protocol';
-import { PROTOCOL_VERSION } from '@zyrox/protocol';
+} from '@wishyor/zyrox-core';
+import type { Document } from '@wishyor/zyrox-protocol';
+import { PROTOCOL_VERSION } from '@wishyor/zyrox-protocol';
 import {
   type ReactNode,
   useEffect,

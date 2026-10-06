@@ -1,4 +1,4 @@
-import { z } from '@zyrox/protocol';
+import { z } from '@wishyor/zyrox-protocol';
 import { and, eq } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { requireProject, requireRole, requireUnrestricted, requireUser } from '../auth';

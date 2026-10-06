@@ -29,7 +29,7 @@ What changed from the plan, and why:
 | `jsonb` for documents | `json` for drafts, versions and manifests | Keeps authored key order (prop order drives forms; diffs stay readable) |
 | `bind`/`setState` paths from the root | Paths relative to `state` | Shorter documents, fewer mistakes |
 | `size-limit` | `pnpm size` (Vite build, fully minified, gzipped) | Same budget, no extra tool. Now 18.6 KB |
-| Preview tools in the main entry | `@zyrox/react/preview` | Production bundles don't ship them |
+| Preview tools in the main entry | `@wishyor/zyrox-react/preview` | Production bundles don't ship them |
 | Claude-only translation | `TranslationProvider` (Claude, DeepL, LibreTranslate, webhook, any plain-text model, custom) | Teams choose their model |
 
 ---
@@ -37,7 +37,7 @@ What changed from the plan, and why:
 ## 1. Goals and non-goals
 
 ### Goals
-1. **Same runtime for web and native.** `@zyrox/react` runs in React DOM and React Native. Only your
+1. **Same runtime for web and native.** `@wishyor/zyrox-react` runs in React DOM and React Native. Only your
    components differ per platform.
 2. **Fully custom components.** You register components; Zyrox never renders anything of its own.
 3. **Typed from one source.** You write a component's props once as a Zod schema. That one schema gives
@@ -99,7 +99,7 @@ Ideas borrowed and combined:
             ▼                                   bootstrap│  immutable    │ telemetry
 ┌────────────────────────┐                     (per user)│  docs via CDN │ (batched)
 │ Your app (web / RN)    │ ◀────────────────────────────┘               │
-│ @zyrox/react runtime   │ ─────────────────────────────────────────────┘
+│ @wishyor/zyrox-react runtime   │ ─────────────────────────────────────────────┘
 │ + YOUR components      │ ── data requests (your auth) ──▶ Your APIs
 │ + YOUR actions         │ ── exposure / track events ────▶ Your analytics
 └────────────────────────┘
@@ -110,14 +110,14 @@ Ideas borrowed and combined:
 ```
 zyrox/
   packages/
-    protocol/   @zyrox/protocol  Document/node/action/op types, Zod schemas, JSON Schema export,
+    protocol/   @wishyor/zyrox-protocol  Document/node/action/op types, Zod schemas, JSON Schema export,
                                  defineComponent/defineAction, zx.* editor hints. No React.
-    core/       @zyrox/core      Expression engine, store, action runner, document compiler,
+    core/       @wishyor/zyrox-core      Expression engine, store, action runner, document compiler,
                                  op applier, cache, bootstrap client. No React.
-    react/      @zyrox/react     Renderer, registry, provider, hooks, preview host.
+    react/      @wishyor/zyrox-react     Renderer, registry, provider, hooks, preview host.
                                  Same code for React DOM and React Native.
-    server/     @zyrox/server    Hono app: delivery + admin + preview relay + MCP + telemetry.
-    cli/        @zyrox/cli       manifest push, snapshot, validate, pull/push documents.
+    server/     @wishyor/zyrox-server    Hono app: delivery + admin + preview relay + MCP + telemetry.
+    cli/        @wishyor/zyrox-cli       manifest push, snapshot, validate, pull/push documents.
   apps/
     dashboard/                   Vite + React SPA (served by the server in production).
   examples/
@@ -191,14 +191,14 @@ show API field errors.
 
 Overlays are built-in actions: `sheet` (a document by key, an inline document, or plain content),
 `closeSheet`, `alert` (waits for a button; each button carries its own actions) and `toast`. The app
-supplies their components (`overlays`; defaults in `@zyrox/react/overlays`).
+supplies their components (`overlays`; defaults in `@wishyor/zyrox-react/overlays`).
 
 **UI from any backend** (`docs/backend-ui.md`) reuses the same actions without the Zyrox server:
 `$actions` in any API response or error body, messages (`{ id, actions, triggers, expiresAt }`) over
 SSE / WebSocket / push / polling / custom transports, and trigger rules (`on` screen_view / track /
 app_open / foreground, `if` expression, `once` / `cooldown` / `maxPerSession` / `delay`) evaluated on the
 device. Backend actions are limited to an allowlist (`remoteActions`, UI and navigation by default) and
-taken literally (no expressions, except in trigger rules). `@zyrox/actions` is the zero-dependency
+taken literally (no expressions, except in trigger rules). `@wishyor/zyrox-actions` is the zero-dependency
 backend SDK (builders, validation, SSE hub, push data) and ships a JSON Schema for other languages.
 
 ### 4.2 Node
@@ -281,7 +281,7 @@ safe for concurrent edits and easy for LLMs to stream. The same ops are used by 
 
 ```ts
 // components/product-card/def.ts   (pure: no React, importable by the CLI in Node)
-import { defineComponent, z, zx } from '@zyrox/protocol';
+import { defineComponent, z, zx } from '@wishyor/zyrox-protocol';
 
 export const ProductCardDef = defineComponent({
   name: 'ProductCard',
@@ -300,7 +300,7 @@ export const ProductCardDef = defineComponent({
 ```tsx
 // components/product-card/ProductCard.tsx         (web, your design system)
 // components/product-card/ProductCard.native.tsx  (RN, picked automatically by Metro)
-import { implement } from '@zyrox/react';
+import { implement } from '@wishyor/zyrox-react';
 import { ProductCardDef } from './def';
 
 export const ProductCard = implement(ProductCardDef, ({ title, image, price, tone, onPress, slots }) => (
@@ -354,7 +354,7 @@ build supports, which is enough for compatibility reports. No app-version bookke
 
 ---
 
-## 6. Client runtime (`@zyrox/core` + `@zyrox/react`)
+## 6. Client runtime (`@wishyor/zyrox-core` + `@wishyor/zyrox-react`)
 
 ### 6.1 Setup
 
@@ -411,7 +411,7 @@ the same way.
   on the server.
 
 ### 6.4 Preview host
-`<ZyroxPreviewHost registry={registry} />` (from `@zyrox/react/preview`) is a route you mount in your
+`<ZyroxPreviewHost registry={registry} />` (from `@wishyor/zyrox-react/preview`) is a route you mount in your
 web app or Expo web build. The dashboard loads it in an iframe and sends it documents, mock data and
 selection over `postMessage`. It reports clicks/hovers and node bounding boxes back to the dashboard.
 Components your preview host can't render show as labelled placeholders, and the real device preview
@@ -435,21 +435,21 @@ as daily counters, not raw events.
 The admin API is versioned at `/api/v1` and described by an OpenAPI 3.1 document (`/api/v1/openapi.json`,
 kept complete by a test). Every audited change is also an outbound webhook event (signed like webhook
 functions, SSRF-protected, retried 10 s / 1 min / 5 min, logged per webhook). `GET /v1/screens/:key` returns
-one screen for a user in a single request for server-side rendering (`fetchScreen` in `@zyrox/core`).
+one screen for a user in a single request for server-side rendering (`fetchScreen` in `@wishyor/zyrox-core`).
 Draft preview tokens (stateless, HMAC-signed with the server secret, expiring, optionally per document)
 make the bootstrap and screens endpoints serve drafts, compiled with draft blocks and content-addressed
 like versions; clients with a token skip storage and telemetry. Projects export to one JSON file (drafts,
 optional history and releases, settings without secrets) and import into any project.
 
 ### 6.7 Size budget
-`@zyrox/core` + `@zyrox/react` ≤ **24 KB gzipped** (fully minified), enforced in CI with
+`@wishyor/zyrox-core` + `@wishyor/zyrox-react` ≤ **24 KB gzipped** (fully minified), enforced in CI with
 `pnpm size`; currently 23.4 KB (raised from 20 KB for form validation, overlays and backend-triggered
-actions). Opt-in parts ship as separate entries: `@zyrox/react/overlays` (default sheet, alert and toast
-components) and `@zyrox/react/remote` (streams and trigger rules). Zod is used only in dev builds and on the server.
+actions). Opt-in parts ship as separate entries: `@wishyor/zyrox-react/overlays` (default sheet, alert and toast
+components) and `@wishyor/zyrox-react/remote` (streams and trigger rules). Zod is used only in dev builds and on the server.
 
 ---
 
-## 7. Server (`@zyrox/server`)
+## 7. Server (`@wishyor/zyrox-server`)
 
 ### 7.1 Data model (Postgres + Drizzle)
 
@@ -517,7 +517,7 @@ token). Modeled on design-tool MCP servers, so agents can design with the app's 
 - Guides: `get_guide` and the Agent Skills as resources.
 
 Tools call the admin API in-process, so roles and validation are identical to the dashboard.
-**Publish and release are not exposed**; a human does those in the dashboard. `@zyrox/skills` ships
+**Publish and release are not exposed**; a human does those in the dashboard. `@wishyor/zyrox-skills` ships
 the Agent Skills (`npx zyrox skills install`).
 
 ### 7.6 Deployment

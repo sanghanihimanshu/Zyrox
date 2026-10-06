@@ -3,7 +3,7 @@ import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
-import { createZyroxServer, type ZyroxServer } from '@zyrox/server';
+import { createZyroxServer, type ZyroxServer } from '@wishyor/zyrox-server';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import productJson from '../../../examples/components/documents/product.json';

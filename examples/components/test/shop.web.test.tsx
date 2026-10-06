@@ -1,5 +1,5 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { type Fetcher, ZyroxProvider, ZyroxScreen } from '@zyrox/react';
+import { type Fetcher, ZyroxProvider, ZyroxScreen } from '@wishyor/zyrox-react';
 import { handleShopRequest } from '@zyrox-examples/shop-api';
 import { useMemo, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';

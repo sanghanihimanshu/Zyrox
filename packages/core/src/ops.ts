@@ -1,4 +1,4 @@
-import type { Document, Node, Op, SlotRef, Value } from '@zyrox/protocol';
+import type { Document, Node, Op, SlotRef, Value } from '@wishyor/zyrox-protocol';
 import { getIn, setIn, splitPath, unsetIn } from './path';
 
 /**

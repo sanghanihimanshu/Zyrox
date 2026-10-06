@@ -1,6 +1,6 @@
 ---
 name: zyrox-backend-ui
-description: Drive a Zyrox app's UI from any backend (Node, Python, Go, Java, Ruby, PHP, serverless) - sheets, alerts, toasts, redirects, refreshes and allowed app actions sent as `$actions` in API responses, as messages over SSE / WebSocket / push notifications / polling / Firebase / Pusher, or as event-trigger rules the app evaluates on its own screen views and tracked events (in-app messaging). Covers @zyrox/actions (builders, UiChannel SSE hub, push data, validation, JSON Schema), the app side (overlays, ZyroxRemote, useZyroxActions, remoteActions allowlist) and security. Use when a backend should open a sheet, show a toast or alert, redirect, or react to app events.
+description: Drive a Zyrox app's UI from any backend (Node, Python, Go, Java, Ruby, PHP, serverless) - sheets, alerts, toasts, redirects, refreshes and allowed app actions sent as `$actions` in API responses, as messages over SSE / WebSocket / push notifications / polling / Firebase / Pusher, or as event-trigger rules the app evaluates on its own screen views and tracked events (in-app messaging). Covers @wishyor/zyrox-actions (builders, UiChannel SSE hub, push data, validation, JSON Schema), the app side (overlays, ZyroxRemote, useZyroxActions, remoteActions allowlist) and security. Use when a backend should open a sheet, show a toast or alert, redirect, or react to app events.
 ---
 
 # UI from your backend
@@ -10,8 +10,8 @@ The contract is JSON actions, the same built-ins documents use: `{ "do": "toast"
 ## App setup (once)
 
 ```tsx
-import { defaultOverlays } from '@zyrox/react/overlays';          // or { Sheet, Alert, Toasts, Message } of your design system
-import { sseSource, ZyroxRemote } from '@zyrox/react/remote';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';          // or { Sheet, Alert, Toasts, Message } of your design system
+import { sseSource, ZyroxRemote } from '@wishyor/zyrox-react/remote';
 
 <ZyroxProvider overlays={defaultOverlays} fetcher={fetcher} navigate={navigate} /* remoteActions={[...DEFAULT_REMOTE_ACTIONS, 'addToCart']} */>
   <ZyroxRemote key={userId} sources={[sseSource(`${API}/ui/events`, { headers: async () => ({ authorization: `Bearer ${await token()}` }) })]}
@@ -33,7 +33,7 @@ Buttons: `{ label, style: default|primary|cancel|destructive, actions }`. App ac
 ## 1. `$actions` in responses (user did something)
 
 ```ts
-import { ui, withActions } from '@zyrox/actions';
+import { ui, withActions } from '@wishyor/zyrox-actions';
 res.json(withActions({ discount }, ui.toast('FIRST100 applied', { tone: 'success' })));
 res.status(422).json(withActions({ error: 'invalid' }, ui.alert('Coupon not valid', 'It expired.')));
 res.status(401).json(withActions({}, ui.reset('login')));          // session expired → sign-in
@@ -45,7 +45,7 @@ Other languages: `{"data": …, "$actions": [{"do": "toast", "message": "Saved"}
 `{ id?, actions?, triggers?, expiresAt? }`: `id` runs once per install (safe to resend); `expiresAt` drops late deliveries.
 
 ```ts
-import { UiChannel, ui, uiMessage, toPushData } from '@zyrox/actions';
+import { UiChannel, ui, uiMessage, toPushData } from '@wishyor/zyrox-actions';
 const channel = new UiChannel();
 app.get('/ui/events', auth, (req, res) => channel.pipe(req.user.id, req, res));          // Express/node:http
 export const GET = async (req: Request) => channel.sse((await auth(req)).userId, req);    // Hono/Next/Bun/Deno
@@ -57,7 +57,7 @@ Multiple instances: fan out via Redis/NATS and `publish` on each. App side: `sse
 ## 3. Trigger rules (app event → UI, no round trip)
 
 ```ts
-import { trigger, ui } from '@zyrox/actions';
+import { trigger, ui } from '@wishyor/zyrox-actions';
 app.get('/ui/triggers', auth, (req, res) => res.json({ triggers: [
   trigger({ id: 'free-delivery', on: 'track', name: 'add_to_cart', if: '{{ event.props.price < 199 }}', once: true,
             actions: [ui.message({ title: 'Free delivery over ₹199', message: 'Add ₹{{ 199 - event.props.price }} more.' })] }),
@@ -73,7 +73,7 @@ app.get('/ui/triggers', auth, (req, res) => res.json({ triggers: [
 
 ## Rules
 
-- Validate before sending: `assertUiActions(actions)`, `validateUiTriggers(rules)`; other languages: `@zyrox/actions/schema.json`.
+- Validate before sending: `assertUiActions(actions)`, `validateUiTriggers(rules)`; other languages: `@wishyor/zyrox-actions/schema.json`.
 - Default allowlist: navigation + UI built-ins + `track`/`setState`/`setLocale`/`setErrors`/`resetForm`/`if`; never `request`/`call`. One disallowed action rejects the whole list.
 - Derive SSE channel keys from the authenticated session, never from client parameters. Keep push payloads < 4 KB (send a sheet `screen` key, not a document).
 - Prefer `sheet { screen: '…' }` for rich content so designers edit it in the dashboard; use `content` for simple messages.

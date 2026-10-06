@@ -1,18 +1,18 @@
-# @zyrox/cli
+# @wishyor/zyrox-cli
 
 The Zyrox CLI uploads app manifests, syncs screens and blocks as JSON, validates documents, publishes versions, creates offline snapshots, and configures coding-agent tooling.
 
 ## Install
 
 ```bash
-pnpm add -D @zyrox/cli
+pnpm add -D @wishyor/zyrox-cli
 pnpm exec zyrox --help
 ```
 
 Create a `zyrox.config.ts` in your app repository:
 
 ```ts
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 import { componentDefs, actionDefs } from './src/zyrox/defs';
 
 export default defineConfig({

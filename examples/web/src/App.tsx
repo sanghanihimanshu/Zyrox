@@ -1,6 +1,6 @@
-import { type Fetcher, ZyroxProvider, ZyroxScreen } from '@zyrox/react';
-import { defaultOverlays } from '@zyrox/react/overlays';
-import { parsePreviewLink, ZyroxLivePreview, ZyroxPreviewHost } from '@zyrox/react/preview';
+import { type Fetcher, ZyroxProvider, ZyroxScreen } from '@wishyor/zyrox-react';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';
+import { parsePreviewLink, ZyroxLivePreview, ZyroxPreviewHost } from '@wishyor/zyrox-react/preview';
 import { createExampleRegistry, exampleStrings } from '@zyrox-examples/components';
 import { documents } from '@zyrox-examples/components/documents';
 import { handleShopRequest } from '@zyrox-examples/shop-api';

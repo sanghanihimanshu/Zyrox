@@ -1,6 +1,6 @@
-import type { Manifest } from '@zyrox/protocol';
-import { ZyroxProvider } from '@zyrox/react';
-import { ZyroxPreviewHost } from '@zyrox/react/preview';
+import type { Manifest } from '@wishyor/zyrox-protocol';
+import { ZyroxProvider } from '@wishyor/zyrox-react';
+import { ZyroxPreviewHost } from '@wishyor/zyrox-react/preview';
 import { StrictMode, useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { placeholderRegistry } from './placeholders';

@@ -1,5 +1,5 @@
-import type { Document } from '@zyrox/protocol';
-import { buildManifest } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
+import { buildManifest } from '@wishyor/zyrox-protocol';
 import { describe, expect, it, vi } from 'vitest';
 import { exampleManifestInput } from '../../../examples/components/src/manifest';
 import { duplicateOps, insertionFor, newNode } from '../src/editor/create';

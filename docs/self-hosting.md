@@ -24,8 +24,8 @@ One process serves everything: the public delivery API your apps call, the admin
 ```bash
 git clone <this repository> zyrox && cd zyrox
 pnpm install
-pnpm --filter @zyrox/dashboard build      # the server serves apps/dashboard/dist
-pnpm --filter @zyrox/server start          # http://localhost:4400
+pnpm --filter @wishyor/zyrox-dashboard build      # the server serves apps/dashboard/dist
+pnpm --filter @wishyor/zyrox-server start          # http://localhost:4400
 ```
 
 Open http://localhost:4400 and create the owner account. Data goes to `packages/server/.zyrox-data` (embedded PGlite). For anything shared, use Postgres and Docker as below.
@@ -211,7 +211,7 @@ Documents can call functions: `{ "do": "call", "fn": "applyCoupon", "args": { â€
 
 ```ts
 // e.g. a Vercel / Cloud Run / Lambda handler
-import { verifySignature } from '@zyrox/server';
+import { verifySignature } from '@wishyor/zyrox-server';
 
 export async function POST(req: Request) {
   const body = await req.text();
@@ -263,14 +263,14 @@ Agents get design context, a component map, tokens, design-system rules, scaffol
 
 ## Embedding the server in your Node app
 
-`@zyrox/server` exports the whole server, so you can add code functions, a custom translator, or mount it in an existing app:
+`@wishyor/zyrox-server` exports the whole server, so you can add code functions, a custom translator, or mount it in an existing app:
 
 ```ts
-import { createZyroxServer, deeplTranslator } from '@zyrox/server';
+import { createZyroxServer, deeplTranslator } from '@wishyor/zyrox-server';
 
 const zyrox = await createZyroxServer({
   database: process.env.DATABASE_URL,           // postgres://â€¦, a directory, or memory://
-  dashboardDir: './dashboard',                  // a copy of apps/dashboard/dist (pnpm --filter @zyrox/dashboard build)
+  dashboardDir: './dashboard',                  // a copy of apps/dashboard/dist (pnpm --filter @wishyor/zyrox-dashboard build)
   publicUrl: 'https://ui.example.com',
   secureCookies: true,
   openSignup: false,

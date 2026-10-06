@@ -1,4 +1,4 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import counterJson from './counter.json';
 import homeJson from './home.json';
 import productJson from './product.json';

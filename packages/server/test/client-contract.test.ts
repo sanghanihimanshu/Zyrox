@@ -1,5 +1,5 @@
-import { ScreenRuntime, ZyroxClient } from '@zyrox/core';
-import { buildManifest, type Document } from '@zyrox/protocol';
+import { ScreenRuntime, ZyroxClient } from '@wishyor/zyrox-core';
+import { buildManifest, type Document } from '@wishyor/zyrox-protocol';
 import { afterAll, beforeAll, expect, it } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import { actionDefs, componentDefs } from '../../../examples/components/src/defs';

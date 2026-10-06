@@ -54,7 +54,7 @@ export interface ComponentSpec {
   dir?: string;
   /** Default `['web', 'native']`. */
   platforms?: ('web' | 'native')[];
-  /** Package to import Zyrox from. Default `@zyrox/react`. */
+  /** Package to import Zyrox from. Default `@wishyor/zyrox-react`. */
   importFrom?: string;
 }
 
@@ -179,7 +179,7 @@ export function scaffoldComponent(input: ComponentSpec): ScaffoldResult {
 
   const name = spec.name;
   const dir = `${(spec.dir ?? 'src/zyrox/components').replace(/\/+$/, '')}/${kebab(name)}`;
-  const from = spec.importFrom ?? '@zyrox/react';
+  const from = spec.importFrom ?? '@wishyor/zyrox-react';
   const platforms = spec.platforms ?? ['web', 'native'];
   const def = `${name}Def`;
 

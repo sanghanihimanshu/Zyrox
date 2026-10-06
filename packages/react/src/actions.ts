@@ -1,5 +1,5 @@
-import { compileActions, parseUiMessage, type SheetResult, timeOfMessage } from '@zyrox/core';
-import type { Action, SheetAction, ToastAction } from '@zyrox/protocol';
+import { compileActions, parseUiMessage, type SheetResult, timeOfMessage } from '@wishyor/zyrox-core';
+import type { Action, SheetAction, ToastAction } from '@wishyor/zyrox-protocol';
 import { useMemo } from 'react';
 import { useZyrox } from './context';
 

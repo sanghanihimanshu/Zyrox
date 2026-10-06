@@ -1,4 +1,4 @@
-import type { Document, Manifest } from '@zyrox/protocol';
+import type { Document, Manifest } from '@wishyor/zyrox-protocol';
 import { type CSSProperties, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { StableContext, useZyrox } from './context';
 import { ZyroxScreen } from './screen';

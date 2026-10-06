@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { QRCodeSVG } from 'qrcode.react';
 import { useEffect, useRef, useState } from 'react';
 import { post } from '../lib/api';

@@ -1,9 +1,9 @@
 # CLI guide
 
-Install `@zyrox/cli` in the app repository that contains your component definitions and JSON documents:
+Install `@wishyor/zyrox-cli` in the app repository that contains your component definitions and JSON documents:
 
 ```bash
-pnpm add -D @zyrox/cli
+pnpm add -D @wishyor/zyrox-cli
 pnpm exec zyrox --help
 ```
 
@@ -12,7 +12,7 @@ The CLI loads `zyrox.config.ts`, `.mts`, `.js` or `.mjs` from the current direct
 ## Configure a project
 
 ```ts
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 import { componentDefs, actionDefs, helperNames } from './src/zyrox/defs';
 
 export default defineConfig({

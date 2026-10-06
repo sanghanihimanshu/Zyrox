@@ -1,5 +1,5 @@
-import type { DeviceInfo } from '@zyrox/core';
-import { isRtl } from '@zyrox/core';
+import type { DeviceInfo } from '@wishyor/zyrox-core';
+import { isRtl } from '@wishyor/zyrox-core';
 import { createElement, type ReactNode, useSyncExternalStore } from 'react';
 import type { Platform, ZyroxStorage } from './platform-api';
 

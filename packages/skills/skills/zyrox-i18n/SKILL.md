@@ -29,7 +29,7 @@ Messages use placeholders and ICU plurals/selects:
    - **Server provider (default):** when the server runs with `ZYROX_RUNTIME_TRANSLATION=true`, the provider fetches missing keys from `/v1/translate` in batches and keeps the results on the device until the source strings change. Apps send keys only; the server translates its own released source strings, so the public key can't be used to translate arbitrary text. Calls are cached and rate limited.
    - **Your own model** (on-device ML Kit / Apple Translation, your cloud, a function):
 ```ts
-import { splitMessage } from '@zyrox/core';
+import { splitMessage } from '@wishyor/zyrox-core';
 <ZyroxProvider translateMissing={async ({ source, locale, sourceLocale }) => {
   if (!source) return null;
   const parts = splitMessage(source);              // protects {placeholders} and plural/select branches

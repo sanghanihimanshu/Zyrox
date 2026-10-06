@@ -1,4 +1,4 @@
-import type { ManifestInput } from '@zyrox/protocol';
+import type { ManifestInput } from '@wishyor/zyrox-protocol';
 import { actionDefs, componentDefs } from './defs';
 import { palette, space, textSize } from './tokens';
 

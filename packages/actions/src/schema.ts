@@ -1,6 +1,6 @@
 /**
  * JSON Schema (2020-12) of UI actions, messages and trigger rules, for backends in any language.
- * Also published as `@zyrox/actions/schema.json` (`ui-actions.schema.json` in the package).
+ * Also published as `@wishyor/zyrox-actions/schema.json` (`ui-actions.schema.json` in the package).
  */
 const json = { description: 'Any JSON value' };
 const list = (ref: string) => ({ type: 'array', items: { $ref: ref } });

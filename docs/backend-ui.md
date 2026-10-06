@@ -1,6 +1,6 @@
 # UI from your backend: sheets, alerts, toasts, redirects and event triggers
 
-Your backend can tell the app what to show: open a sheet, confirm with an alert, show a toast, redirect to another screen, refresh data, or run one of the app's own actions. It works with **any backend** (Node, Python, Go, Java, Ruby, PHP, serverless) and **any transport**; the Zyrox server is not involved. The contract is plain JSON; [`@zyrox/actions`](../packages/actions) adds typed builders, validation, a server-sent events hub and push helpers for JavaScript backends, and a [JSON Schema](../packages/actions/ui-actions.schema.json) covers every other language.
+Your backend can tell the app what to show: open a sheet, confirm with an alert, show a toast, redirect to another screen, refresh data, or run one of the app's own actions. It works with **any backend** (Node, Python, Go, Java, Ruby, PHP, serverless) and **any transport**; the Zyrox server is not involved. The contract is plain JSON; [`@wishyor/zyrox-actions`](../packages/actions) adds typed builders, validation, a server-sent events hub and push helpers for JavaScript backends, and a [JSON Schema](../packages/actions/ui-actions.schema.json) covers every other language.
 
 There are three ways to send UI:
 
@@ -32,9 +32,9 @@ There are three ways to send UI:
 ## Set up the app
 
 ```tsx
-import { ZyroxProvider } from '@zyrox/react';
-import { defaultOverlays } from '@zyrox/react/overlays';           // or your own components
-import { sseSource, ZyroxRemote } from '@zyrox/react/remote';
+import { ZyroxProvider } from '@wishyor/zyrox-react';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';           // or your own components
+import { sseSource, ZyroxRemote } from '@wishyor/zyrox-react/remote';
 
 const uiEvents = sseSource('https://api.example.com/ui/events', {
   headers: async () => ({ authorization: `Bearer ${await getToken()}` }),
@@ -54,7 +54,7 @@ const uiEvents = sseSource('https://api.example.com/ui/events', {
 
 - `overlays` is all you need for `$actions` in responses and for documents that use `sheet`, `alert` and `toast`.
 - `<ZyroxRemote>` (optional, a separate entry point so apps that don't use it don't ship it) connects message sources and loads trigger rules. `triggers` is a URL fetched with your `fetcher` (so it carries your auth), a list, or `() => Promise`. It reloads when the app returns to the foreground. Sources are read when it mounts: give it a `key` (e.g. the user id) to reconnect after sign-in.
-- On React Native, `@zyrox/react/overlays` resolves to native components: a `Modal` sheet with a spring, the platform's own `Alert.alert`, and toasts.
+- On React Native, `@wishyor/zyrox-react/overlays` resolves to native components: a `Modal` sheet with a spring, the platform's own `Alert.alert`, and toasts.
 
 ## Actions
 
@@ -102,8 +102,8 @@ A sheet can show a screen designed in the Zyrox dashboard (`"screen": "sheets/up
 Add `$actions` to any JSON response the app fetches through its `fetcher`: document data sources, the `request` action, and `call` results from webhook functions. The app strips the key from the data and runs the actions. Error responses work the same way: the error's `body` is read when your fetcher throws a `FetchError(message, status, body)` or any error with `status` and `body`.
 
 ```ts
-// Node / TypeScript with @zyrox/actions
-import { ui, withActions } from '@zyrox/actions';
+// Node / TypeScript with @wishyor/zyrox-actions
+import { ui, withActions } from '@wishyor/zyrox-actions';
 
 app.post('/coupons/apply', (req, res) => {
   const coupon = coupons.find(req.body.code);
@@ -144,10 +144,10 @@ The app also accepts a bare list of actions, a response with `$actions`, push da
 
 ### Server-sent events
 
-`UiChannel` from `@zyrox/actions` is an in-process pub/sub with replay (`Last-Event-ID`) and keep-alives:
+`UiChannel` from `@wishyor/zyrox-actions` is an in-process pub/sub with replay (`Last-Event-ID`) and keep-alives:
 
 ```ts
-import { UiChannel, ui, uiMessage } from '@zyrox/actions';
+import { UiChannel, ui, uiMessage } from '@wishyor/zyrox-actions';
 
 export const uiChannel = new UiChannel();
 
@@ -177,7 +177,7 @@ In other languages, write `text/event-stream` yourself: `data: {"actions":[…]}
 ### WebSocket, polling and anything else
 
 ```ts
-import { pollSource, webSocketSource, type UiActionSource } from '@zyrox/react/remote';
+import { pollSource, webSocketSource, type UiActionSource } from '@wishyor/zyrox-react/remote';
 
 webSocketSource('wss://api.example.com/ui', { onOpen: (ws) => ws.send(JSON.stringify({ token })) });
 pollSource(() => api.get('/ui/inbox'), { interval: 60 });
@@ -199,7 +199,7 @@ Data payloads carry a message; the app runs it when the notification arrives or 
 
 ```ts
 // Backend: FCM data values must be strings (≈4 KB in total). toPushData checks the size.
-import { toPushData, ui, uiMessage } from '@zyrox/actions';
+import { toPushData, ui, uiMessage } from '@wishyor/zyrox-actions';
 await messaging.send({ token, notification: { title: 'Order shipped' },
   data: toPushData(uiMessage([ui.navigate('order', { id })], { id: `push-${id}`, expiresIn: 3600 })) });
 ```
@@ -222,7 +222,7 @@ Keep push payloads small: send a sheet with a `screen` key rather than a whole d
 Rules let your backend decide what appears when something happens in the app, without a round trip and without an app release, like in-app messaging tools. The app evaluates them on its own events.
 
 ```ts
-import { trigger, ui } from '@zyrox/actions';
+import { trigger, ui } from '@wishyor/zyrox-actions';
 
 app.get('/ui/triggers', requireAuth, (req, res) => res.json({ triggers: [
   trigger({
@@ -281,7 +281,7 @@ await actions.run([{ do: 'alert', title: 'Delete address?', buttons: [/* … */]
 `defaultOverlays` is plain and accessible (dialog roles, focus, Escape, dark mode). `createOverlays({ light, dark })` adjusts colors, radius and font. To use your own components, pass `{ Sheet, Alert, Toasts, Message }`:
 
 ```tsx
-import type { OverlayComponents } from '@zyrox/react';
+import type { OverlayComponents } from '@wishyor/zyrox-react';
 
 const overlays: OverlayComponents = {
   // children: the sheet's Zyrox screen or message; onDismiss: user closed it
@@ -298,7 +298,7 @@ Mix and match: `{ ...defaultOverlays, Sheet: MySheet }`.
 
 ## Security
 
-- **Allowed actions.** Backend actions are limited to `remoteActions`, by default UI and navigation built-ins: `navigate`, `back`, `openUrl`, `sheet`, `closeSheet`, `alert`, `toast`, `refresh`, `track`, `setState`, `setLocale`, `setErrors`, `resetForm`, `if`. `request` and `call` are excluded so messages can't make the app send data. A list containing anything else (including nested button actions) is rejected as a whole and reported as an error event. Allow app actions by name: `remoteActions={[...DEFAULT_REMOTE_ACTIONS, 'addToCart']}` (`DEFAULT_REMOTE_ACTIONS` from `@zyrox/react`).
+- **Allowed actions.** Backend actions are limited to `remoteActions`, by default UI and navigation built-ins: `navigate`, `back`, `openUrl`, `sheet`, `closeSheet`, `alert`, `toast`, `refresh`, `track`, `setState`, `setLocale`, `setErrors`, `resetForm`, `if`. `request` and `call` are excluded so messages can't make the app send data. A list containing anything else (including nested button actions) is rejected as a whole and reported as an error event. Allow app actions by name: `remoteActions={[...DEFAULT_REMOTE_ACTIONS, 'addToCart']}` (`DEFAULT_REMOTE_ACTIONS` from `@wishyor/zyrox-react`).
 - **Text is literal.** Actions in responses and messages are not evaluated, so user content like a product name containing `{{ }}` is shown as is. Only trigger rules (which you author, like documents) use expressions.
 - **`openUrl`** only opens the app's `urlSchemes`; **`navigate`** goes through your navigator, which decides what each name means.
 - **Streams**: authenticate the connection and derive the channel key from the session, never from a query parameter the client chose. The example's `?user=demo` is for the demo only.
@@ -307,15 +307,15 @@ Mix and match: `{ ...defaultOverlays, Sheet: MySheet }`.
 ## Testing
 
 ```ts
-import { assertUiActions, validateUiMessage, validateUiTriggers, uiJsonSchema } from '@zyrox/actions';
+import { assertUiActions, validateUiMessage, validateUiTriggers, uiJsonSchema } from '@wishyor/zyrox-actions';
 
 assertUiActions(response.$actions);                         // throws with every problem listed
 expect(validateUiTriggers(rules)).toEqual([]);
 ```
 
-Other languages validate against [`ui-actions.schema.json`](../packages/actions/ui-actions.schema.json) (JSON Schema 2020-12; also exported as `@zyrox/actions/schema.json`).
+Other languages validate against [`ui-actions.schema.json`](../packages/actions/ui-actions.schema.json) (JSON Schema 2020-12; also exported as `@wishyor/zyrox-actions/schema.json`).
 
-In the app, `ScreenRuntime.runRemote(actions)` and `UiActionCenter` from `@zyrox/core` run without React; the example apps' parity tests drive the same rules on web and native (`examples/components/test/scenarios.ts`, scenario "backend-driven UI").
+In the app, `ScreenRuntime.runRemote(actions)` and `UiActionCenter` from `@wishyor/zyrox-core` run without React; the example apps' parity tests drive the same rules on web and native (`examples/components/test/scenarios.ts`, scenario "backend-driven UI").
 
 ## The example
 

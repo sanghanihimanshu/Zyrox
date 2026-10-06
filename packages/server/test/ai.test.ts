@@ -1,5 +1,5 @@
 import type Anthropic from '@anthropic-ai/sdk';
-import { buildManifest, type Document } from '@zyrox/protocol';
+import { buildManifest, type Document } from '@wishyor/zyrox-protocol';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import { exampleManifestInput } from '../../../examples/components/src/manifest';

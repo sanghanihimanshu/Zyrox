@@ -1,4 +1,4 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { describe, expect, it, vi } from 'vitest';
 import { compileDocument } from '../src/compile';
 import { createTranslator, formatMessage, I18n, isRtl, localeChain, pickLocale } from '../src/i18n';

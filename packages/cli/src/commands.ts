@@ -1,8 +1,8 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, relative, resolve } from 'node:path';
-import type { Snapshot } from '@zyrox/core';
-import { type Problem, validateDocument } from '@zyrox/core/validate';
-import { canonicalJson, type Manifest } from '@zyrox/protocol';
+import type { Snapshot } from '@wishyor/zyrox-core';
+import { type Problem, validateDocument } from '@wishyor/zyrox-core/validate';
+import { canonicalJson, type Manifest } from '@wishyor/zyrox-protocol';
 import { type Api, ApiError } from './api';
 import { type Resolved, resolveManifest } from './config';
 

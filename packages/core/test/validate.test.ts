@@ -1,4 +1,4 @@
-import { buildManifest, type Document } from '@zyrox/protocol';
+import { buildManifest, type Document } from '@wishyor/zyrox-protocol';
 import { describe, expect, it } from 'vitest';
 import { exampleManifestInput } from '../../../examples/components/src/manifest';
 import { hasErrors, validateDocument } from '../src/validate';

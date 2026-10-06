@@ -4,7 +4,7 @@ import {
   type UiActionSource,
   type UiMessage,
   type UiTrigger,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useZyrox } from './context';
 import { getPlatform, type ZyroxStorage } from './platform-api';
@@ -16,7 +16,7 @@ export type {
   UiMessage,
   UiTrigger,
   WebSocketSourceOptions,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 export {
   createSseParser,
   parseUiMessage,
@@ -24,7 +24,7 @@ export {
   sseSource,
   UiActionCenter,
   webSocketSource,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 
 export interface ZyroxRemoteProps {
   /**

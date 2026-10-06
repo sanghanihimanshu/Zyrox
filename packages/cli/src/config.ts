@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { buildManifest, type Manifest, type ManifestInput } from '@zyrox/protocol';
+import { buildManifest, type Manifest, type ManifestInput } from '@wishyor/zyrox-protocol';
 
 export interface ZyroxConfig {
   /** Zyrox server URL. */

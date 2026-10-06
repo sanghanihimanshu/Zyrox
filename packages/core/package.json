@@ -1,5 +1,5 @@
 {
-  "name": "@zyrox/core",
+  "name": "@wishyor/zyrox-core",
   "version": "0.1.0",
   "description": "Zyrox runtime core: expressions, store, actions, compiler, ops, delivery client. No React.",
   "type": "module",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@cfworker/json-schema": "4.1.1",
-    "@zyrox/protocol": "workspace:*"
+    "@wishyor/zyrox-protocol": "workspace:*"
   },
   "devDependencies": {
     "tsdown": "0.23.0",

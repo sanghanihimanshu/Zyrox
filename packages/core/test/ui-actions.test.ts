@@ -1,4 +1,4 @@
-import type { Action, Document } from '@zyrox/protocol';
+import type { Action, Document } from '@wishyor/zyrox-protocol';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { compileActions } from '../src/compile';
 import { OverlayController } from '../src/overlays';
@@ -556,7 +556,7 @@ describe('sources', () => {
   });
 });
 
-describe('@zyrox/actions compatibility', () => {
+describe('@wishyor/zyrox-actions compatibility', () => {
   it('runs what the backend SDK builds', async () => {
     const { ui, withActions, uiMessage, toPushData, trigger } = await import('../../actions/src');
     const { runtime, overlays, navigate } = setup({}, doc({ key: '$app' }));

@@ -1,4 +1,4 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { handleShopRequest, uiTriggers } from '@zyrox-examples/shop-api';
 import { counter, home, product, register, shopHome, signup } from '../documents';
 

@@ -1,4 +1,4 @@
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 import { exampleManifestInput } from './src/manifest';
 
 // `pnpm zyrox push --publish --release dev` uploads the example documents to your Zyrox server.

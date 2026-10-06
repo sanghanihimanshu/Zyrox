@@ -1,4 +1,4 @@
-# @zyrox/server
+# @wishyor/zyrox-server
 
 The Zyrox server provides the delivery API, dashboard API, document publishing, environments, releases, preview relay, webhooks, and MCP endpoint.
 

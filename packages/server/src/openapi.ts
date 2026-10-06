@@ -1,4 +1,4 @@
-import { documentJsonSchema } from '@zyrox/protocol';
+import { documentJsonSchema } from '@wishyor/zyrox-protocol';
 
 /**
  * OpenAPI 3.1 description of the delivery API (`/v1`) and the admin API (`/api/v1`), served at

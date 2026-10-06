@@ -1,5 +1,5 @@
 import { act, cleanup, render, screen } from '@testing-library/react';
-import { ZyroxClient } from '@zyrox/core';
+import { ZyroxClient } from '@wishyor/zyrox-core';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import { createExampleRegistry } from '../../../examples/components/src/index';
@@ -66,7 +66,7 @@ describe('server delivery', () => {
   });
 
   it('falls back to documents bundled with the app', async () => {
-    const counter = counterJson as unknown as import('@zyrox/protocol').Document;
+    const counter = counterJson as unknown as import('@wishyor/zyrox-protocol').Document;
     const local = render(
       <ZyroxProvider registry={createExampleRegistry()} documents={{ counter }}>
         <ZyroxScreen screen="counter" />

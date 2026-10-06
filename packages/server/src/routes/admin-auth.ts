@@ -1,4 +1,4 @@
-import { z } from '@zyrox/protocol';
+import { z } from '@wishyor/zyrox-protocol';
 import { and, eq, sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';

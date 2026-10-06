@@ -97,7 +97,7 @@ describe('UI actions', () => {
   });
 
   it('serves valid trigger rules and order updates', async () => {
-    const { validateUiMessage, validateUiTriggers } = await import('@zyrox/actions');
+    const { validateUiMessage, validateUiTriggers } = await import('@wishyor/zyrox-actions');
     const { triggers } = (await handleShopRequest({ method: 'GET', url: '/ui/triggers' })) as {
       triggers: unknown;
     };

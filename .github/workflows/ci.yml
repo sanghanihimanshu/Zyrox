@@ -31,7 +31,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @zyrox/dashboard build
+      - run: pnpm --filter @wishyor/zyrox-dashboard build
       - run: pnpm --filter @zyrox-examples/web build
-      - run: pnpm --filter @zyrox/dashboard exec playwright install --with-deps chromium
-      - run: pnpm --filter @zyrox/dashboard e2e
+      - run: pnpm --filter @wishyor/zyrox-dashboard exec playwright install --with-deps chromium
+      - run: pnpm --filter @wishyor/zyrox-dashboard e2e

@@ -13,10 +13,10 @@ export type {
   Presentation,
   Snapshot,
   ZyroxEvent,
-} from '@zyrox/core';
-export { DataCache, DEFAULT_REMOTE_ACTIONS, FetchError, I18n, ZyroxClient } from '@zyrox/core';
-export type { ActionDef, ComponentDef, Document, Manifest, Motion, Node } from '@zyrox/protocol';
-export { defineAction, defineComponent, extendComponent, z, zx } from '@zyrox/protocol';
+} from '@wishyor/zyrox-core';
+export { DataCache, DEFAULT_REMOTE_ACTIONS, FetchError, I18n, ZyroxClient } from '@wishyor/zyrox-core';
+export type { ActionDef, ComponentDef, Document, Manifest, Motion, Node } from '@wishyor/zyrox-protocol';
+export { defineAction, defineComponent, extendComponent, z, zx } from '@wishyor/zyrox-protocol';
 export type { ZyroxActions } from './actions';
 export { useZyroxActions } from './actions';
 export { useScreenRuntime, useZyrox } from './context';

@@ -1,5 +1,5 @@
-import { parseExpression } from '@zyrox/core';
-import { z } from '@zyrox/protocol';
+import { parseExpression } from '@wishyor/zyrox-core';
+import { z } from '@wishyor/zyrox-protocol';
 import { and, desc, eq, lt } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { requireRole } from '../auth';

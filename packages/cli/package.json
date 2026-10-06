@@ -1,5 +1,5 @@
 {
-  "name": "@zyrox/cli",
+  "name": "@wishyor/zyrox-cli",
   "version": "0.1.0",
   "description": "Zyrox CLI: upload app manifests, sync documents as files, validate, and build offline snapshots.",
   "type": "module",
@@ -18,15 +18,15 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@zyrox/core": "workspace:*",
-    "@zyrox/protocol": "workspace:*",
-    "@zyrox/skills": "workspace:*",
+    "@wishyor/zyrox-core": "workspace:*",
+    "@wishyor/zyrox-protocol": "workspace:*",
+    "@wishyor/zyrox-skills": "workspace:*",
     "commander": "15.0.0",
     "tsx": "4.23.15"
   },
   "devDependencies": {
     "@types/node": "26.6.4",
-    "@zyrox/server": "workspace:*",
+    "@wishyor/zyrox-server": "workspace:*",
     "typescript": "6.0.3",
     "vitest": "5.0.3"
   }

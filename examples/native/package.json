@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@zyrox-examples/components": "workspace:*",
-    "@zyrox/react": "workspace:*",
+    "@wishyor/zyrox-react": "workspace:*",
     "expo": "57.0.26",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",

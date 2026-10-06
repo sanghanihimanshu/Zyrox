@@ -1,5 +1,5 @@
 {
-  "name": "@zyrox/actions",
+  "name": "@wishyor/zyrox-actions",
   "version": "0.1.0",
   "description": "Drive app UI from any backend: sheets, alerts, toasts, redirects and event-trigger rules for Zyrox apps. Zero dependencies; Node, Bun, Deno, edge.",
   "type": "module",

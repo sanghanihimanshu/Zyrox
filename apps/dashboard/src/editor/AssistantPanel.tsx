@@ -1,5 +1,5 @@
-import type { Problem } from '@zyrox/core/validate';
-import type { Op } from '@zyrox/protocol';
+import type { Problem } from '@wishyor/zyrox-core/validate';
+import type { Op } from '@wishyor/zyrox-protocol';
 import { ImagePlus, Send, Sparkles, Square, Undo2, X } from 'lucide-react';
 import { type ClipboardEvent, useRef, useState } from 'react';
 import { Button, cx, IconButton, Textarea } from '../ui';

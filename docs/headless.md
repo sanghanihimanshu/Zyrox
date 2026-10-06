@@ -59,7 +59,7 @@ curl -X POST -H "authorization: Bearer $ZYROX_TOKEN" -H 'content-type: applicati
 Headers: `x-zyrox-event`, `x-zyrox-delivery` (the event id, the same on every retry: ignore ids you've seen), `x-zyrox-timestamp` and `x-zyrox-signature: sha256=HMAC(secret, timestamp + "." + body)`. Verify it like a webhook function:
 
 ```ts
-import { verifySignature } from '@zyrox/server';
+import { verifySignature } from '@wishyor/zyrox-server';
 
 app.post('/hooks/zyrox', express.raw({ type: 'application/json' }), (req, res) => {
   const body = req.body.toString('utf8');
@@ -83,11 +83,11 @@ def verify(secret: str, timestamp: str, body: bytes, signature: str) -> bool:
 
 ## Server-side rendering
 
-`GET /v1/screens/:key` returns one screen exactly as a given user would get it (releases, targeting, rollouts, experiments), in one request. `fetchScreen` from `@zyrox/core` wraps it, so server code needs no React:
+`GET /v1/screens/:key` returns one screen exactly as a given user would get it (releases, targeting, rollouts, experiments), in one request. `fetchScreen` from `@wishyor/zyrox-core` wraps it, so server code needs no React:
 
 ```tsx
 // app/[[...slug]]/page.tsx (Next.js App Router, a server component)
-import { fetchScreen } from '@zyrox/core';
+import { fetchScreen } from '@wishyor/zyrox-core';
 import { cookies, draftMode, headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Screen } from './screen';   // a client component: <ZyroxProvider …><ZyroxScreen document={…} version={…} /></ZyroxProvider>

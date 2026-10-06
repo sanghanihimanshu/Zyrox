@@ -1,4 +1,4 @@
-import type { Document, Op } from '@zyrox/protocol';
+import type { Document, Op } from '@wishyor/zyrox-protocol';
 import { describe, expect, it } from 'vitest';
 import productJson from '../../../examples/components/documents/product.json';
 import { applyOp, applyOps, findNode, listNodes, OpError, uniqueId } from '../src/ops';

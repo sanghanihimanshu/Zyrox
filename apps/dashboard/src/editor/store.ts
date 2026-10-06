@@ -1,5 +1,5 @@
-import { applyOps, findNode, OpError } from '@zyrox/core';
-import type { Document, Op } from '@zyrox/protocol';
+import { applyOps, findNode, OpError } from '@wishyor/zyrox-core';
+import type { Document, Op } from '@wishyor/zyrox-protocol';
 import { useSyncExternalStore } from 'react';
 import { ApiError, post } from '../lib/api';
 

@@ -5,7 +5,7 @@ import {
   helperFunctions,
   MISSING,
   parseExpression,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 import { bucket } from '../crypto';
 import type { ReleaseRule, Variant } from '../db/schema';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@zyrox/react",
+  "name": "@wishyor/zyrox-react",
   "version": "0.1.0",
   "description": "Zyrox renderer for React and React Native. Bring your own components.",
   "type": "module",
@@ -32,8 +32,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@zyrox/core": "workspace:*",
-    "@zyrox/protocol": "workspace:*"
+    "@wishyor/zyrox-core": "workspace:*",
+    "@wishyor/zyrox-protocol": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18.2",

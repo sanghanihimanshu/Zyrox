@@ -1,5 +1,5 @@
-import type { Problem } from '@zyrox/core/validate';
-import type { Document, Node } from '@zyrox/protocol';
+import type { Problem } from '@wishyor/zyrox-core/validate';
+import type { Document, Node } from '@wishyor/zyrox-protocol';
 
 export const BLOCK_PREFIX = '@block/';
 const MAX_DEPTH = 8;

@@ -1,6 +1,6 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
-import { buildManifest, type Document } from '@zyrox/protocol';
+import { buildManifest, type Document } from '@wishyor/zyrox-protocol';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { WebSocket } from 'ws';
 import counterJson from '../../../examples/components/documents/counter.json';

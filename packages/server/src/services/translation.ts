@@ -1,4 +1,4 @@
-import { messageArgs, splitMessage } from '@zyrox/core';
+import { messageArgs, splitMessage } from '@wishyor/zyrox-core';
 import { type AiClient, translateMessages } from './ai';
 
 export interface TranslationRequest {

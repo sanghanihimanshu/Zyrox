@@ -1,4 +1,12 @@
-import type { Action, DataSource, Document, Motion, Node, RefreshTrigger, Value } from '@zyrox/protocol';
+import type {
+  Action,
+  DataSource,
+  Document,
+  Motion,
+  Node,
+  RefreshTrigger,
+  Value,
+} from '@wishyor/zyrox-protocol';
 import {
   type Ast,
   type EvalEnv,

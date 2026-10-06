@@ -8,8 +8,8 @@ Use your hosted server URL or run the server locally. The local development comm
 
 ```bash
 pnpm install
-pnpm --filter @zyrox/dashboard build
-pnpm --filter @zyrox/server start
+pnpm --filter @wishyor/zyrox-dashboard build
+pnpm --filter @wishyor/zyrox-server start
 ```
 
 The local server listens at `http://localhost:4400`. The first account created in a fresh instance becomes the owner. Keep the database volume and server secret key persistent in deployments.
@@ -23,8 +23,8 @@ Sign in to the dashboard at the server URL, create a project for your app, and n
 Install the runtime in the app and the CLI in the repository that owns the component definitions and screen JSON:
 
 ```bash
-pnpm add @zyrox/react
-pnpm add -D @zyrox/cli
+pnpm add @wishyor/zyrox-react
+pnpm add -D @wishyor/zyrox-cli
 ```
 
 For React Native, also install and configure React Native and its platform requirements. The example app and [Library guide](library.md) show the provider and registry setup.
@@ -36,7 +36,7 @@ In the dashboard, open **Settings → Environments & keys** and copy the develop
 The app registry implements components; the CLI manifest contains their definitions. Use the same definition list for both so their manifest hashes match. Create `zyrox.config.ts` at the app repository root:
 
 ```ts
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 import { componentDefs, actionDefs, helperNames } from './src/zyrox/defs';
 
 export default defineConfig({

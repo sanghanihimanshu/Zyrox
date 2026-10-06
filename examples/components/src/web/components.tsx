@@ -1,4 +1,4 @@
-import { implement, useI18n, useZyrox, ZyroxScreen } from '@zyrox/react';
+import { implement, useI18n, useZyrox, ZyroxScreen } from '@wishyor/zyrox-react';
 import type { CSSProperties } from 'react';
 import {
   BadgeDef,

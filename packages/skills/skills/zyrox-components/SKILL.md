@@ -11,7 +11,7 @@ Zyrox ships no UI kit. Each component the server can use is **your** component p
 
 ```ts
 // src/zyrox/components/product-card/def.ts
-import { defineComponent, z, zx } from '@zyrox/react'; // or '@zyrox/protocol'
+import { defineComponent, z, zx } from '@wishyor/zyrox-react'; // or '@wishyor/zyrox-protocol'
 
 export const ProductCardDef = defineComponent({
   name: 'ProductCard',                                   // what documents use as "type"
@@ -74,7 +74,7 @@ export const ListDef = defineComponent({
 
 ```tsx
 // ProductCard.tsx (web)              // ProductCard.native.tsx (React Native) - Metro picks it automatically
-import { implement } from '@zyrox/react';
+import { implement } from '@wishyor/zyrox-react';
 import { ProductCardDef } from './def';
 
 export const ProductCard = implement(ProductCardDef, ({ title, image, price, tone, onPress, slots, nodeId, a11y }) => (
@@ -113,7 +113,7 @@ Documents call it as `{ "do": "addToCart", "productId": "{{ item.id }}", "qty": 
 2. Add the definition to `zyrox.config.ts`:
 
 ```ts
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 export default defineConfig({
   server: 'https://ui.example.com',
   project: 'shop',

@@ -1,5 +1,5 @@
-import { pickLocale } from '@zyrox/core';
-import { hashString, z } from '@zyrox/protocol';
+import { pickLocale } from '@wishyor/zyrox-core';
+import { hashString, z } from '@wishyor/zyrox-protocol';
 import { type Context, Hono } from 'hono';
 import { compress } from 'hono/compress';
 import { cors } from 'hono/cors';

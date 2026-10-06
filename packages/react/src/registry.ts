@@ -1,4 +1,4 @@
-import type { HelperTree, HostAction, HostActionContext, Observer } from '@zyrox/core';
+import type { HelperTree, HostAction, HostActionContext, Observer } from '@wishyor/zyrox-core';
 import {
   type ActionDef,
   buildManifest,
@@ -6,7 +6,7 @@ import {
   type Manifest,
   type Motion,
   type z,
-} from '@zyrox/protocol';
+} from '@wishyor/zyrox-protocol';
 import type { ComponentType, ReactNode } from 'react';
 
 // --- Component props as seen by your implementation ---------------------------------------------

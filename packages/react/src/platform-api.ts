@@ -1,4 +1,4 @@
-import type { DeviceInfo } from '@zyrox/core';
+import type { DeviceInfo } from '@wishyor/zyrox-core';
 import type { ComponentType, ReactNode } from 'react';
 
 /** Key-value storage. Works with `localStorage`, AsyncStorage, MMKV (wrap `getString`/`set`)… */
@@ -30,6 +30,8 @@ export function setPlatform(platform: Platform): void {
 
 export function getPlatform(): Platform {
   if (!current)
-    throw new Error('@zyrox/react: no platform set. Import from "@zyrox/react", not from its internals.');
+    throw new Error(
+      '@wishyor/zyrox-react: no platform set. Import from "@wishyor/zyrox-react", not from its internals.',
+    );
   return current;
 }

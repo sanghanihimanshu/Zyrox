@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { buildManifest } from '@zyrox/protocol';
+import { buildManifest } from '@wishyor/zyrox-protocol';
 import productJson from '../../../examples/components/documents/product.json' with { type: 'json' };
 import { exampleManifestInput } from '../../../examples/components/src/manifest';
 

@@ -1,4 +1,4 @@
-import type { Action, Document } from '@zyrox/protocol';
+import type { Action, Document } from '@wishyor/zyrox-protocol';
 import { describe, expect, it } from 'vitest';
 import { compileActions } from '../src/compile';
 import { checkField, isEmptyValue } from '../src/forms';

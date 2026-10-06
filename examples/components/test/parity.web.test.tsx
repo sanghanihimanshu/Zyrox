@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { ZyroxProvider, ZyroxScreen } from '@zyrox/react';
-import { defaultOverlays } from '@zyrox/react/overlays';
-import { ZyroxRemote } from '@zyrox/react/remote';
+import { ZyroxProvider, ZyroxScreen } from '@wishyor/zyrox-react';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';
+import { ZyroxRemote } from '@wishyor/zyrox-react/remote';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { documents } from '../documents';
 import { createExampleRegistry, exampleStrings } from '../src/index';
@@ -67,7 +67,7 @@ describe.each(scenarios)('web: $name', (scenario) => {
 
 describe('manifest', () => {
   it('the web registry reports the manifest the CLI uploads', async () => {
-    const { buildManifest } = await import('@zyrox/protocol');
+    const { buildManifest } = await import('@wishyor/zyrox-protocol');
     const { exampleManifestInput } = await import('../src/index');
     expect(createExampleRegistry().manifest.hash).toBe(buildManifest(exampleManifestInput).hash);
   });

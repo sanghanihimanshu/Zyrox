@@ -1,6 +1,6 @@
 # Using Zyrox in your app
 
-This guide covers `@zyrox/react` in a React (web) or React Native / Expo app: from registering your components to production caching and tests. The same code runs on both platforms; only your component implementations differ.
+This guide covers `@wishyor/zyrox-react` in a React (web) or React Native / Expo app: from registering your components to production caching and tests. The same code runs on both platforms; only your component implementations differ.
 
 - [1. Concepts](#1-concepts)
 - [2. Install](#2-install)
@@ -44,8 +44,8 @@ The server never sends code. Documents only reference components and actions you
 ## 2. Install
 
 ```bash
-npm i @zyrox/react zod
-npm i -D @zyrox/cli
+npm i @wishyor/zyrox-react zod
+npm i -D @wishyor/zyrox-cli
 ```
 
 Zyrox isn't published to npm yet. Until it is, either develop inside this monorepo (add your app next to `examples/`), or publish the packages to a private registry with `pnpm -r publish` (workspace versions are rewritten on publish). The packages ship TypeScript sources, which Metro, Expo, Vite and tsx compile out of the box. For Next.js add them to `transpilePackages`.
@@ -58,7 +58,7 @@ A definition is the contract between your code and the server. Keep definitions 
 
 ```ts
 // src/zyrox/defs.ts
-import { defineComponent, defineAction, extendComponent, z, zx } from '@zyrox/react';
+import { defineComponent, defineAction, extendComponent, z, zx } from '@wishyor/zyrox-react';
 
 export const ProductCardDef = defineComponent({
   name: 'ProductCard',                                  // what documents use as "type"
@@ -116,7 +116,7 @@ Scaffold a definition plus web and native starter code with `npx zyrox scaffold 
 
 ```tsx
 // src/components/ProductCard.tsx (web)
-import { implement } from '@zyrox/react';
+import { implement } from '@wishyor/zyrox-react';
 import { ProductCardDef } from '../zyrox/defs';
 
 export const ProductCard = implement(ProductCardDef, ({ name, image, price, qty, onPress, onAdd, onRemove, slots, nodeId, a11y }) => (
@@ -174,7 +174,7 @@ export const AddToCartDef = defineAction({
 });
 
 // actions.ts
-import { implementAction } from '@zyrox/react';
+import { implementAction } from '@wishyor/zyrox-react';
 export const addToCart = implementAction(AddToCartDef, async ({ productId, qty }, ctx) => {
   await cart.add(productId, qty);
   ctx.track('add_to_cart', { productId });     // ctx: screen, nodeId, event, getState, setState, navigate, track, refresh
@@ -186,7 +186,7 @@ Documents call it like a built-in action: `{ "do": "addToCart", "productId": "{{
 ## 6. The registry and the manifest
 
 ```ts
-import { createRegistry, definePlugin } from '@zyrox/react';
+import { createRegistry, definePlugin } from '@wishyor/zyrox-react';
 
 export const registry = createRegistry({
   components: [ProductCard, TextField /* … */],
@@ -204,7 +204,7 @@ export const registry = createRegistry({
 
 ```ts
 // zyrox.config.ts (Node: definitions only)
-import { defineConfig } from '@zyrox/cli';
+import { defineConfig } from '@wishyor/zyrox-cli';
 import { ProductCardDef, TextFieldDef, AddToCartDef } from './src/zyrox/defs';
 
 export default defineConfig({
@@ -224,7 +224,7 @@ Share one `manifestInput` object between `createRegistry` and the config so both
 ## 7. The provider
 
 ```tsx
-import { ZyroxProvider } from '@zyrox/react';
+import { ZyroxProvider } from '@wishyor/zyrox-react';
 
 <ZyroxProvider
   registry={registry}
@@ -261,7 +261,7 @@ Every prop is listed in the [reference](#23-reference). Props are read live: cha
 ```
 
 - `screen` loads the released version for this user. If the server has none (or there is no server), a document of that key from the provider's `documents` renders.
-- `document={doc}` renders an inline document (tests, bundled screens, server rendering: `fetchScreen` from `@zyrox/core` gets one screen for a user in one request, see the [headless guide](headless.md#server-side-rendering)).
+- `document={doc}` renders an inline document (tests, bundled screens, server rendering: `fetchScreen` from `@wishyor/zyrox-core` gets one screen for a user in one request, see the [headless guide](headless.md#server-side-rendering)).
 - `fallback` renders when the document can't be loaded or uses a newer protocol. Ship a native version of critical screens.
 - A mounted screen keeps the version it opened with, so nothing changes under the user's finger. Pass `live` to switch immediately (dashboards, kiosks).
 - Screens can be embedded anywhere: a section of a native screen, a tab, a modal, a bottom sheet, a cell.
@@ -469,10 +469,10 @@ Every rule value can be an expression, and `{ "value": …, "message": "…" }` 
 
 ### Sheets, alerts and toasts
 
-`sheet`, `alert` and `toast` render through the provider's `overlays`: the defaults from `@zyrox/react/overlays` (web: accessible dialogs; React Native: a `Modal` sheet, the native `Alert.alert`, toasts) or your design system's components.
+`sheet`, `alert` and `toast` render through the provider's `overlays`: the defaults from `@wishyor/zyrox-react/overlays` (web: accessible dialogs; React Native: a `Modal` sheet, the native `Alert.alert`, toasts) or your design system's components.
 
 ```tsx
-import { defaultOverlays } from '@zyrox/react/overlays';
+import { defaultOverlays } from '@wishyor/zyrox-react/overlays';
 <ZyroxProvider overlays={defaultOverlays} …>
 ```
 
@@ -531,7 +531,7 @@ Sources, merged in this order (later wins):
    - or any model you choose, e.g. on device:
 
 ```ts
-import { splitMessage } from '@zyrox/core';
+import { splitMessage } from '@wishyor/zyrox-core';
 <ZyroxProvider translateMissing={async ({ source, locale, sourceLocale }) => {
   if (!source) return null;
   const parts = splitMessage(source);                      // protects {placeholders} and plural branches
@@ -631,7 +631,7 @@ The runtime re-renders only the nodes whose inputs changed: typing in a bound fi
 **Your components in the dashboard canvas** (web): add a route that renders the preview host inside your provider, then set its URL as the project's Preview URL in Settings:
 
 ```tsx
-import { ZyroxPreviewHost } from '@zyrox/react/preview';
+import { ZyroxPreviewHost } from '@wishyor/zyrox-react/preview';
 // e.g. /__zyrox/preview. Only your dashboard may drive it: other sites could otherwise render
 // documents with your users' credentials. Ship this route in development/staging builds only.
 <ZyroxProvider registry={registry} fetcher={fetcher}>
@@ -644,12 +644,12 @@ Without it the canvas shows labeled placeholders from the manifest.
 **Live preview on devices:** the editor's Device button shows a QR code with `yourscheme://zyrox-preview?server=…&session=…&token=…`. Handle the link and render the live preview; edits appear as they're made:
 
 ```tsx
-import { parsePreviewLink, ZyroxLivePreview } from '@zyrox/react/preview';
+import { parsePreviewLink, ZyroxLivePreview } from '@wishyor/zyrox-react/preview';
 const link = parsePreviewLink(url);                       // from Linking (RN) or location.href (web)
 if (link) return <ZyroxLivePreview {...link} onClose={() => …} />; // inside your provider
 ```
 
-The preview tools live in `@zyrox/react/preview` so production bundles that don't import them don't include them.
+The preview tools live in `@wishyor/zyrox-react/preview` so production bundles that don't import them don't include them.
 
 ## 19. Compatibility with older app builds
 
@@ -750,7 +750,7 @@ A typical app pipeline:
 | `translateMissing` | `({ key, locale, source, sourceLocale }) => Promise<string \| null>` | Any translation model |
 | `i18n` | `I18n` | Share an instance with non-Zyrox UI |
 | `dataCache` | `DataCache` | Shared data source cache |
-| `overlays` | `OverlayComponents` | `{ Sheet, Alert, Toasts, Message }` for `sheet`, `alert`, `toast` (`defaultOverlays` from `@zyrox/react/overlays`) |
+| `overlays` | `OverlayComponents` | `{ Sheet, Alert, Toasts, Message }` for `sheet`, `alert`, `toast` (`defaultOverlays` from `@wishyor/zyrox-react/overlays`) |
 | `remoteActions` | `string[]` | Actions your backend may trigger; default `DEFAULT_REMOTE_ACTIONS` ([backend UI](backend-ui.md#security)) |
 | `mock` | `boolean` | Use data source mocks |
 | `debug` | `boolean` | Log events, check props against schemas |
@@ -763,11 +763,11 @@ A typical app pipeline:
 
 | From | Exports |
 | --- | --- |
-| `@zyrox/react` | `ZyroxProvider`, `ZyroxScreen`, `createRegistry`, `definePlugin`, `implement`, `implementAction`, `defineComponent`, `extendComponent`, `defineAction`, `z`, `zx`, `useI18n`, `useZyrox`, `useZyroxActions`, `useScreenRuntime`, `useScreenState`, `ZyroxClient`, `DataCache`, `I18n`, `FetchError`, `DEFAULT_REMOTE_ACTIONS`, types (`Fetcher`, `Observer`, `ZyroxEvent`, `MotionAdapter`, `ZyroxComponentProps`, `OverlayComponents`, …) |
-| `@zyrox/react/preview` | `ZyroxPreviewHost` (web), `ZyroxLivePreview`, `parsePreviewLink` |
-| `@zyrox/react/overlays` | `defaultOverlays`, `createOverlays({ light, dark })` (web and React Native) |
-| `@zyrox/react/remote` | `ZyroxRemote`, `sseSource`, `webSocketSource`, `pollSource`, `parseUiMessage`, `UiActionCenter` |
-| `@zyrox/actions` | For your backend: `ui` builders, `withActions`, `uiMessage`, `trigger`, `UiChannel` (SSE), `toPushData`, validation, `uiJsonSchema` |
-| `@zyrox/core` | The runtime without React: `ScreenRuntime`, `compileDocument`, `applyOps`, `ZyroxClient`, `fetchScreen` (SSR), `I18n`, `formatMessage`, `splitMessage`, `messageArgs`, … |
-| `@zyrox/core/validate` | `validateDocument(doc, { manifest })` |
-| `@zyrox/protocol` | Types, Zod schemas (`documentSchema`, `opSchema`, …), `buildManifest`, `defineComponent` |
+| `@wishyor/zyrox-react` | `ZyroxProvider`, `ZyroxScreen`, `createRegistry`, `definePlugin`, `implement`, `implementAction`, `defineComponent`, `extendComponent`, `defineAction`, `z`, `zx`, `useI18n`, `useZyrox`, `useZyroxActions`, `useScreenRuntime`, `useScreenState`, `ZyroxClient`, `DataCache`, `I18n`, `FetchError`, `DEFAULT_REMOTE_ACTIONS`, types (`Fetcher`, `Observer`, `ZyroxEvent`, `MotionAdapter`, `ZyroxComponentProps`, `OverlayComponents`, …) |
+| `@wishyor/zyrox-react/preview` | `ZyroxPreviewHost` (web), `ZyroxLivePreview`, `parsePreviewLink` |
+| `@wishyor/zyrox-react/overlays` | `defaultOverlays`, `createOverlays({ light, dark })` (web and React Native) |
+| `@wishyor/zyrox-react/remote` | `ZyroxRemote`, `sseSource`, `webSocketSource`, `pollSource`, `parseUiMessage`, `UiActionCenter` |
+| `@wishyor/zyrox-actions` | For your backend: `ui` builders, `withActions`, `uiMessage`, `trigger`, `UiChannel` (SSE), `toPushData`, validation, `uiJsonSchema` |
+| `@wishyor/zyrox-core` | The runtime without React: `ScreenRuntime`, `compileDocument`, `applyOps`, `ZyroxClient`, `fetchScreen` (SSR), `I18n`, `formatMessage`, `splitMessage`, `messageArgs`, … |
+| `@wishyor/zyrox-core/validate` | `validateDocument(doc, { manifest })` |
+| `@wishyor/zyrox-protocol` | Types, Zod schemas (`documentSchema`, `opSchema`, …), `buildManifest`, `defineComponent` |

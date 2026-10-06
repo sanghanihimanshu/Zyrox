@@ -1,4 +1,4 @@
-import type { Manifest } from '@zyrox/protocol';
+import type { Manifest } from '@wishyor/zyrox-protocol';
 import { Blocks, Box, Search } from 'lucide-react';
 import { useState } from 'react';
 import { Input, useToast } from '../ui';

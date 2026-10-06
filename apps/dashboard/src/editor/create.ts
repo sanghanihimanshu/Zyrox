@@ -1,5 +1,5 @@
-import { findNode, uniqueId } from '@zyrox/core';
-import type { Document, Manifest, Node, Op, SlotRef, Value } from '@zyrox/protocol';
+import { findNode, uniqueId } from '@wishyor/zyrox-core';
+import type { Document, Manifest, Node, Op, SlotRef, Value } from '@wishyor/zyrox-protocol';
 import { enumValues, fieldKind, type JsonSchema, properties, required } from './schema';
 
 function sample(name: string, schema: JsonSchema): Value {

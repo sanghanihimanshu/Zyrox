@@ -1,4 +1,4 @@
-import { createRegistry } from '@zyrox/react';
+import { createRegistry } from '@wishyor/zyrox-react';
 import { type ExampleActionHandlers, exampleActions } from './actions';
 import { exampleManifestInput } from './manifest';
 import { webComponents } from './web/components';

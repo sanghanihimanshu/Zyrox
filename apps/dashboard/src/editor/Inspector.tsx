@@ -1,6 +1,6 @@
-import { findNode, listNodes } from '@zyrox/core';
-import type { Action, Document, Manifest, ManifestComponent, Node, Value } from '@zyrox/protocol';
-import { BUILTIN_ACTIONS, LIFECYCLE_EVENTS } from '@zyrox/protocol';
+import { findNode, listNodes } from '@wishyor/zyrox-core';
+import type { Action, Document, Manifest, ManifestComponent, Node, Value } from '@wishyor/zyrox-protocol';
+import { BUILTIN_ACTIONS, LIFECYCLE_EVENTS } from '@wishyor/zyrox-protocol';
 import { ChevronDown, ChevronUp, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Badge, Button, cx, Field, IconButton, Select, Tabs, useToast } from '../ui';

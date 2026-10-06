@@ -1,5 +1,5 @@
-import { applyOps } from '@zyrox/core';
-import type { Document, Op } from '@zyrox/protocol';
+import { applyOps } from '@wishyor/zyrox-core';
+import type { Document, Op } from '@wishyor/zyrox-protocol';
 import { newId, randomToken } from '../crypto';
 
 /** Minimal socket surface (Hono's WSContext). */

@@ -1,9 +1,9 @@
-# @zyrox/actions
+# @wishyor/zyrox-actions
 
 Drive a Zyrox app's UI from your backend: sheets, alerts, toasts, redirects and event-trigger rules. Zero dependencies; runs on Node, Bun, Deno and edge runtimes. Not a JavaScript backend? Send the same JSON and validate it against [`ui-actions.schema.json`](ui-actions.schema.json).
 
 ```ts
-import { trigger, toPushData, ui, UiChannel, uiMessage, withActions } from '@zyrox/actions';
+import { trigger, toPushData, ui, UiChannel, uiMessage, withActions } from '@wishyor/zyrox-actions';
 
 // 1. In an API response
 res.json(withActions({ discount: 100 }, ui.toast('FIRST100 applied', { tone: 'success' })));
@@ -29,6 +29,6 @@ res.json({ triggers: [trigger({ id: 'big-cart', on: 'track', name: 'add_to_cart'
 | `encodeSse`, `SSE_HEADERS` | For your own SSE endpoints |
 | `toPushData(message)` | `{ zyrox: "<json>" }` within push size limits |
 | `validateUiActions`, `validateUiMessage`, `validateUiTriggers`, `assertUiActions` | Problems with paths |
-| `uiJsonSchema` / `@zyrox/actions/schema.json` | JSON Schema 2020-12 |
+| `uiJsonSchema` / `@wishyor/zyrox-actions/schema.json` | JSON Schema 2020-12 |
 
 The app side (`overlays`, `<ZyroxRemote>`, `useZyroxActions`) and the security model are described in [UI from your backend](../../docs/backend-ui.md).

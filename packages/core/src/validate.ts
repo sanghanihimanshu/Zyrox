@@ -8,7 +8,7 @@ import {
   LIFECYCLE_EVENTS,
   type Manifest,
   type Node,
-} from '@zyrox/protocol';
+} from '@wishyor/zyrox-protocol';
 import { hasButtonActions, splitNested } from './compile';
 import { type Ast, ExprError, hasTemplate, parseExpression, splitTemplate } from './expr';
 import { BUILTIN_HELPER_NAMES } from './helpers';

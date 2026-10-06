@@ -1,4 +1,4 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { describe, expect, it, vi } from 'vitest';
 import counterJson from '../../../examples/components/documents/counter.json';
 import signupJson from '../../../examples/components/documents/signup.json';

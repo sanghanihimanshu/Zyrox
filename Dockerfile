@@ -7,8 +7,8 @@ FROM node:22-slim AS build
 RUN corepack enable
 WORKDIR /app
 COPY . .
-RUN pnpm install --frozen-lockfile --filter "@zyrox/dashboard..." --filter "@zyrox/server..."
-RUN pnpm --filter @zyrox/dashboard build
+RUN pnpm install --frozen-lockfile --filter "@wishyor/zyrox-dashboard..." --filter "@wishyor/zyrox-server..."
+RUN pnpm --filter @wishyor/zyrox-dashboard build
 
 FROM node:22-slim
 RUN corepack enable
@@ -16,7 +16,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages ./packages
-RUN pnpm install --prod --frozen-lockfile --filter "@zyrox/server..." && rm -rf /root/.cache /root/.local/share/pnpm
+RUN pnpm install --prod --frozen-lockfile --filter "@wishyor/zyrox-server..." && rm -rf /root/.cache /root/.local/share/pnpm
 COPY --from=build /app/apps/dashboard/dist ./apps/dashboard/dist
 ENV PORT=4400 \
     DATABASE_URL=/data \

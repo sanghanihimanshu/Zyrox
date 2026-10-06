@@ -1,4 +1,4 @@
-import type { MotionAdapter, MotionItemProps } from '@zyrox/react';
+import type { MotionAdapter, MotionItemProps } from '@wishyor/zyrox-react';
 import { useEffect, useState } from 'react';
 
 const presets: Record<string, { from: React.CSSProperties; to: React.CSSProperties }> = {

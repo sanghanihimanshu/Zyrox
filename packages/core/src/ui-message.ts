@@ -1,4 +1,4 @@
-import type { Action } from '@zyrox/protocol';
+import type { Action } from '@wishyor/zyrox-protocol';
 
 /**
  * Event-triggered UI from your backend: when the app reports an event that matches, the actions

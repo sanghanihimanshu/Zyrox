@@ -1,6 +1,11 @@
-import type { ComponentDef, Manifest, ManifestComponent } from '@zyrox/protocol';
-import { defineAction, z } from '@zyrox/protocol';
-import { createRegistry, type ImplementedComponent, implementAction, type Registry } from '@zyrox/react';
+import type { ComponentDef, Manifest, ManifestComponent } from '@wishyor/zyrox-protocol';
+import { defineAction, z } from '@wishyor/zyrox-protocol';
+import {
+  createRegistry,
+  type ImplementedComponent,
+  implementAction,
+  type Registry,
+} from '@wishyor/zyrox-react';
 import type { CSSProperties, ReactNode } from 'react';
 
 const box: CSSProperties = {

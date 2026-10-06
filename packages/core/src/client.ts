@@ -1,5 +1,5 @@
-import type { Document, StringsBundle } from '@zyrox/protocol';
-import { PROTOCOL_VERSION } from '@zyrox/protocol';
+import type { Document, StringsBundle } from '@wishyor/zyrox-protocol';
+import { PROTOCOL_VERSION } from '@wishyor/zyrox-protocol';
 import type { Messages, MissingTranslator } from './i18n';
 import { FetchError, type FunctionCallContext, type Observer, type ZyroxEvent } from './runtime';
 

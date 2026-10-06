@@ -1,4 +1,4 @@
-import type { MotionAdapter, MotionItemProps } from '@zyrox/react';
+import type { MotionAdapter, MotionItemProps } from '@wishyor/zyrox-react';
 import { useEffect, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 

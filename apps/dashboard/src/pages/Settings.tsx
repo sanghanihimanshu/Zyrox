@@ -462,7 +462,7 @@ function Functions({ admin }: { admin: boolean }) {
           <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
             Verify requests with{' '}
             <code className="font-mono">verifySignature(secret, timestamp, body, signature)</code> from{' '}
-            <code className="font-mono">@zyrox/server</code>.
+            <code className="font-mono">@wishyor/zyrox-server</code>.
           </p>
         </div>
       ) : null}
@@ -660,7 +660,7 @@ function Webhooks({ admin }: { admin: boolean }) {
           <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
             Verify deliveries with{' '}
             <code className="font-mono">verifySignature(secret, timestamp, body, signature)</code> from{' '}
-            <code className="font-mono">@zyrox/server</code>, and ignore repeated{' '}
+            <code className="font-mono">@wishyor/zyrox-server</code>, and ignore repeated{' '}
             <code className="font-mono">x-zyrox-delivery</code> ids.
           </p>
         </div>

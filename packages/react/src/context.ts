@@ -6,7 +6,7 @@ import type {
   OverlayController,
   RuntimeHost,
   ScreenRuntime,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 import { createContext, useContext } from 'react';
 import type { Registry } from './registry';
 
@@ -20,9 +20,9 @@ export interface ZyroxStable {
   debug: boolean;
   /** Wrap nodes for the dashboard canvas (selection, highlighting). */
   inspect: boolean;
-  client?: import('@zyrox/core').ZyroxClient;
+  client?: import('@wishyor/zyrox-core').ZyroxClient;
   /** Documents shipped with the app (the provider's `documents`), by key. */
-  bundled(key: string): import('@zyrox/protocol').Document | undefined;
+  bundled(key: string): import('@wishyor/zyrox-protocol').Document | undefined;
   /** Open sheets, alerts and toasts. */
   overlays: OverlayController;
   /** Runs actions outside any screen (your code, your backend, trigger rules). */

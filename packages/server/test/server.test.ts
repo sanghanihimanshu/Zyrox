@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { buildManifest, type Document } from '@zyrox/protocol';
+import { buildManifest, type Document } from '@wishyor/zyrox-protocol';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { WebSocket } from 'ws';
 import counterJson from '../../../examples/components/documents/counter.json';

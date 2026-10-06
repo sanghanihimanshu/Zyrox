@@ -1,4 +1,4 @@
-import type { JsonSchema, Manifest, ManifestComponent } from '@zyrox/protocol';
+import type { JsonSchema, Manifest, ManifestComponent } from '@wishyor/zyrox-protocol';
 
 /** A short TypeScript-like rendering of a JSON schema, e.g. `"sm" | "md"` or `{ id: string }[]`. */
 export function describeType(schema: JsonSchema | undefined, depth = 0): string {

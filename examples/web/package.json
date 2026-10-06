@@ -11,7 +11,7 @@
   "dependencies": {
     "@zyrox-examples/components": "workspace:*",
     "@zyrox-examples/shop-api": "workspace:*",
-    "@zyrox/react": "workspace:*",
+    "@wishyor/zyrox-react": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

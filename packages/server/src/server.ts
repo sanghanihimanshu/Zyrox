@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { serve, upgradeWebSocket } from '@hono/node-server';
 import { serveStatic } from '@hono/node-server/serve-static';
-import { z } from '@zyrox/protocol';
+import { z } from '@wishyor/zyrox-protocol';
 import { and, eq } from 'drizzle-orm';
 import { type Context, Hono, type Next } from 'hono';
 import { bodyLimit } from 'hono/body-limit';

@@ -45,7 +45,7 @@ Assignment is sticky per user. Apps emit `exposure` events (experiment, variant)
 
 ## Automate around releases
 
-- **Webhooks** (Settings → Webhooks): signed POSTs for `document.publish`, `release.*` (set, rollback, promote, remove), `experiment.*`… Rebuild a site, purge a CDN, notify a channel. Verify with `verifySignature` from `@zyrox/server`; ignore repeated `x-zyrox-delivery` ids (retries).
+- **Webhooks** (Settings → Webhooks): signed POSTs for `document.publish`, `release.*` (set, rollback, promote, remove), `experiment.*`… Rebuild a site, purge a CDN, notify a channel. Verify with `verifySignature` from `@wishyor/zyrox-server`; ignore repeated `x-zyrox-delivery` ids (retries).
 - **API**: `/api/v1` with a personal access token (scope it to one project and role for CI); OpenAPI at `/api/v1/openapi.json`.
 - **Review builds**: `zyrox preview-token` → `<ZyroxProvider previewToken>` shows drafts in a real app build; `fetchScreen({ previewToken })` for SSR draft mode.
 - **Move projects**: `zyrox export --versions` / `zyrox import <file>` (staging server → production, templates). Details: `docs/headless.md` in the Zyrox repository.

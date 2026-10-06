@@ -1,5 +1,5 @@
-import type { Document } from '@zyrox/protocol';
-import { PROTOCOL_VERSION } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
+import { PROTOCOL_VERSION } from '@wishyor/zyrox-protocol';
 import { encodeHeader } from './client';
 
 export interface FetchScreenOptions {

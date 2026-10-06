@@ -1,4 +1,4 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 import { describe, expect, it, vi } from 'vitest';
 import { type Bootstrap, type ClientStorage, ZyroxClient } from '../src/client';
 

@@ -1,4 +1,4 @@
-import { implement, useI18n, ZyroxScreen } from '@zyrox/react';
+import { implement, useI18n, ZyroxScreen } from '@wishyor/zyrox-react';
 import {
   FlatList,
   Pressable,

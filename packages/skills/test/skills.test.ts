@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildManifest, defineAction, defineComponent, z, zx } from '@zyrox/protocol';
+import { buildManifest, defineAction, defineComponent, z, zx } from '@wishyor/zyrox-protocol';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 import {
@@ -268,10 +268,10 @@ async function evaluate(code: string): Promise<Record<string, any>> {
   const js = ts.transpileModule(code, {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
-  const protocol = await import('@zyrox/protocol');
+  const protocol = await import('@wishyor/zyrox-protocol');
   const exports: Record<string, any> = {};
   new Function('require', 'exports', js)((id: string) => {
-    if (id !== '@zyrox/react') throw new Error(`Unexpected import ${id}`);
+    if (id !== '@wishyor/zyrox-react') throw new Error(`Unexpected import ${id}`);
     return protocol;
   }, exports);
   return exports;

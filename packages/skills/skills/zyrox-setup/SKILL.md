@@ -10,15 +10,15 @@ Zyrox renders JSON documents with **your own components**. The app needs: a regi
 ## 1. Install
 
 ```bash
-npm i @zyrox/react          # web and React Native (same package)
-npm i -D @zyrox/cli         # manifest upload, snapshots, GitOps
+npm i @wishyor/zyrox-react          # web and React Native (same package)
+npm i -D @wishyor/zyrox-cli         # manifest upload, snapshots, GitOps
 ```
 
 ## 2. Registry
 
 ```ts
 // src/zyrox/registry.ts
-import { createRegistry } from '@zyrox/react';
+import { createRegistry } from '@wishyor/zyrox-react';
 import { Button, ProductCard } from './components';      // implement(...) results
 import { addToCart } from './actions';                   // implementAction(...) results
 
@@ -137,7 +137,7 @@ const reanimated: MotionAdapter = {
 - **Live preview on devices:** the editor's "Device" button shows a QR code with `yourscheme://zyrox-preview?server=…&session=…&token=…`. Handle it:
 
 ```tsx
-import { parsePreviewLink, ZyroxLivePreview } from '@zyrox/react/preview';
+import { parsePreviewLink, ZyroxLivePreview } from '@wishyor/zyrox-react/preview';
 const link = parsePreviewLink(url);               // from Linking (RN) or location.href (web)
 if (link) return <ZyroxLivePreview {...link} onClose={…} />;   // inside ZyroxProvider
 ```

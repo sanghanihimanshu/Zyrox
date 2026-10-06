@@ -1,5 +1,5 @@
-import type { Document } from '@zyrox/protocol';
-import { z } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
+import { z } from '@wishyor/zyrox-protocol';
 import { and, eq, isNull } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { stream } from 'hono/streaming';

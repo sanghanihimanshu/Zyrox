@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Problem as CoreProblem } from '@zyrox/core/validate';
-import { validateDocument } from '@zyrox/core/validate';
-import type { Document, Manifest } from '@zyrox/protocol';
+import type { Problem as CoreProblem } from '@wishyor/zyrox-core/validate';
+import { validateDocument } from '@wishyor/zyrox-core/validate';
+import type { Document, Manifest } from '@wishyor/zyrox-protocol';
 import {
   AlertTriangle,
   ArrowLeft,

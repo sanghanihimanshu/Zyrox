@@ -1,5 +1,5 @@
 import { expect, type Page, test } from '@playwright/test';
-import { buildManifest } from '@zyrox/protocol';
+import { buildManifest } from '@wishyor/zyrox-protocol';
 import { exampleManifestInput } from '../../../examples/components/src/manifest';
 
 const manifest = buildManifest(exampleManifestInput);

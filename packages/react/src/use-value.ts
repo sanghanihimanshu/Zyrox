@@ -1,4 +1,4 @@
-import type { CompiledValue, Frame, ScreenRuntime } from '@zyrox/core';
+import type { CompiledValue, Frame, ScreenRuntime } from '@wishyor/zyrox-core';
 import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import { useScreenRuntime } from './context';
 

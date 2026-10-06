@@ -70,7 +70,7 @@ createZyroxServer({ functions: { applyCoupon: async (args, ctx) => ({ total: Num
 2. **Webhook functions** (dashboard → Settings → Functions): the server POSTs `{ fn, args, context }` to your URL with
    `x-zyrox-timestamp` and `x-zyrox-signature: sha256=HMAC(secret, timestamp + "." + body)`. Verify it:
 ```ts
-import { verifySignature } from '@zyrox/server';
+import { verifySignature } from '@wishyor/zyrox-server';
 if (!verifySignature(secret, req.headers['x-zyrox-timestamp'], rawBody, req.headers['x-zyrox-signature'])) return res.status(401).end();
 res.json({ result: { total: 90 } });                       // or { error: { message } } with a 4xx/5xx
 ```

@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { applyOps, BUILTIN_HELPER_NAMES, OpError } from '@zyrox/core';
-import { type Problem, validateDocument } from '@zyrox/core/validate';
-import { BUILTIN_ACTIONS, type Document, type Manifest, type Op, opSchema, z } from '@zyrox/protocol';
+import { applyOps, BUILTIN_HELPER_NAMES, OpError } from '@wishyor/zyrox-core';
+import { type Problem, validateDocument } from '@wishyor/zyrox-core/validate';
+import { BUILTIN_ACTIONS, type Document, type Manifest, type Op, opSchema, z } from '@wishyor/zyrox-protocol';
 
 export interface AiOptions {
   apiKey?: string;

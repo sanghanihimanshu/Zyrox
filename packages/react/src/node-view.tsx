@@ -4,7 +4,7 @@ import {
   childFrame,
   type Frame,
   type ScreenRuntime,
-} from '@zyrox/core';
+} from '@wishyor/zyrox-core';
 import { Component, createElement, type ReactNode, useEffect, useMemo } from 'react';
 import { FrameContext, useFrame, useScreenRuntime, useZyrox } from './context';
 import { getPlatform } from './platform-api';

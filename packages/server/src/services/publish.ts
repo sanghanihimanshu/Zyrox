@@ -1,11 +1,11 @@
-import { hasErrors, type Problem, validateDocument } from '@zyrox/core/validate';
+import { hasErrors, type Problem, validateDocument } from '@wishyor/zyrox-core/validate';
 import {
   canonicalJson,
   type Document,
   documentSchema,
   type Manifest,
   stringsBundleSchema,
-} from '@zyrox/protocol';
+} from '@wishyor/zyrox-protocol';
 import { and, desc, eq, gte, inArray, sql } from 'drizzle-orm';
 import { sha256, today } from '../crypto';
 import type { Db } from '../db';

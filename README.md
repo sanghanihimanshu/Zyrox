@@ -14,13 +14,13 @@ Server-driven UI for **React** and **React Native**, with a server that delivers
 
 ## What you get
 
-- **Runtime** (`@zyrox/react`, ~30 KB gzipped before React): renders documents with your components on web and native, with state, two-way binding, declarative form validation, expressions, actions, sheets / alerts / toasts, data sources, templates for virtualized lists, motion, accessibility, error boundaries per node, and observers for any analytics or logging tool.
+- **Runtime** (`@wishyor/zyrox-react`, ~30 KB gzipped before React): renders documents with your components on web and native, with state, two-way binding, declarative form validation, expressions, actions, sheets / alerts / toasts, data sources, templates for virtualized lists, motion, accessibility, error boundaries per node, and observers for any analytics or logging tool.
 - **Delivery built for mobile**: content-addressed documents cached forever, ETag-revalidated bootstrap, offline snapshot, the previous version shown while a new one downloads, retries and timeouts, first-frame rendering from MMKV/localStorage.
 - **Release control**: environments, publish = validate + compile, targeting rules, percentage rollouts, experiments, rollback, compatibility report against the app builds in use, health per version, audit log.
 - **Dashboard**: visual editor with your real components in the canvas, live preview on devices (QR), generated property forms, action builder, JSON mode, translations, releases, experiments, health.
 - **Languages**: ICU messages, bundled + remote + runtime translations, machine translation with any model (Claude, DeepL, LibreTranslate, your own).
 - **Remote functions**: documents call code on the server or signed webhooks to your cloud.
-- **UI from any backend**: sheets, alerts, toasts and redirects from `$actions` in your API responses, from messages over SSE / WebSocket / push, and from event-trigger rules the app evaluates. Standalone: `@zyrox/actions` for Node, a JSON Schema for every other language.
+- **UI from any backend**: sheets, alerts, toasts and redirects from `$actions` in your API responses, from messages over SSE / WebSocket / push, and from event-trigger rules the app evaluates. Standalone: `@wishyor/zyrox-actions` for Node, a JSON Schema for every other language.
 - **AI and agents**: an editor assistant, and an MCP server modeled on design-tool MCPs (design context, component map, tokens, scaffolding, validated edits), plus Agent Skills.
 - **Headless**: versioned admin API with an OpenAPI spec, signed webhooks for publishes and releases, one-request screen fetching for server rendering, draft preview tokens for review builds, project export/import.
 - **CLI**: upload manifests from CI, keep screens in git (`pull`/`push`/`validate`), export/import projects, preview tokens, offline snapshots, component scaffolding.
@@ -29,8 +29,8 @@ Server-driven UI for **React** and **React Native**, with a server that delivers
 
 ```bash
 pnpm install
-pnpm --filter @zyrox/dashboard build
-pnpm --filter @zyrox/server start          # http://localhost:4400 (sign up: the first user is the owner)
+pnpm --filter @wishyor/zyrox-dashboard build
+pnpm --filter @wishyor/zyrox-server start          # http://localhost:4400 (sign up: the first user is the owner)
 pnpm --filter @zyrox-examples/web dev       # http://localhost:5173: the example quick-commerce feed
 ```
 
@@ -62,10 +62,10 @@ The example apps run without a server (bundled documents, in-process example bac
 | `packages/core` | Expressions, store, runtime, client (delivery, caching), i18n, validation (no React) |
 | `packages/react` | Renderer for React DOM and React Native, provider, registry, preview tools |
 | `packages/server` | Hono server: delivery API, admin API, publishing, releases, functions, preview relay, AI, MCP |
-| `packages/actions` | `@zyrox/actions`: zero-dependency backend SDK for UI actions (builders, validation, SSE hub, push), plus the JSON Schema |
+| `packages/actions` | `@wishyor/zyrox-actions`: zero-dependency backend SDK for UI actions (builders, validation, SSE hub, push), plus the JSON Schema |
 | `packages/cli` | `zyrox` command line |
 | `packages/skills` | Agent Skills, component scaffolding, design-system rules |
 | `apps/dashboard` | The dashboard (Vite + React) |
 | `examples/*` | Example components (web + native), documents, web and Expo apps, an example shop backend |
 
-Development: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm size`, and `pnpm --filter @zyrox/dashboard e2e`.
+Development: `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm size`, and `pnpm --filter @wishyor/zyrox-dashboard e2e`.

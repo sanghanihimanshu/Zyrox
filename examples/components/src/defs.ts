@@ -1,4 +1,4 @@
-import { defineAction, defineComponent, z, zx } from '@zyrox/protocol';
+import { defineAction, defineComponent, z, zx } from '@wishyor/zyrox-protocol';
 
 const tone = z.enum(['default', 'muted', 'primary', 'danger', 'success']);
 const space = z.enum(['none', 'xs', 'sm', 'md', 'lg', 'xl']);

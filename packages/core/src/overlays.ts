@@ -1,9 +1,9 @@
-import type { Document } from '@zyrox/protocol';
+import type { Document } from '@wishyor/zyrox-protocol';
 
 /**
  * Sheets, alerts and toasts opened by the `sheet`, `alert` and `toast` actions, whether they come
  * from a document, your backend or your own code. Holds what is open; your overlay components
- * (`@zyrox/react/overlays` or your own) render it.
+ * (`@wishyor/zyrox-react/overlays` or your own) render it.
  */
 
 export type ButtonStyle = 'default' | 'primary' | 'cancel' | 'destructive';
