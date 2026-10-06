@@ -1,0 +1,49 @@
+:root {
+  color: #20231f;
+  background: #f4f5f7;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.shop-shell {
+  max-width: 960px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.shop-header {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.shop-header a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.shop-header span,
+.shop-loading {
+  color: #687067;
+  font-size: 14px;
+}
+
+.shop-loading {
+  padding: 20px;
+}

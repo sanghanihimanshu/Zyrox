@@ -1,0 +1,43 @@
+{
+  "name": "@zyrox/core",
+  "version": "0.1.0",
+  "description": "Zyrox runtime core: expressions, store, actions, compiler, ops, delivery client. No React.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./validate": "./src/validate.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      },
+      "./validate": {
+        "types": "./dist/validate.d.ts",
+        "import": "./dist/validate.js",
+        "require": "./dist/validate.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cfworker/json-schema": "4.1.1",
+    "@zyrox/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "tsdown": "0.23.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
+  }
+}

@@ -128,27 +128,85 @@ function defaultsOf(spec: ManifestComponent): Record<string, unknown> {
 
 /** Generic boxes for every component in a manifest, so drafts render without the real app. */
 export function placeholderRegistry(manifest: Manifest | undefined): Registry {
-  const components: ImplementedComponent[] = Object.entries(manifest?.components ?? {}).map(
-    ([name, spec]) => {
-      const def = {
-        kind: 'component',
-        name,
-        description: spec.description,
-        props: z.looseObject({}),
-        events: Object.fromEntries(Object.keys(spec.events).map((e) => [e, z.unknown()])),
-        children: spec.children,
-        slots: spec.slots,
-        templates: spec.templates,
-        bind: spec.bind,
-      } as unknown as ComponentDef;
-      return {
-        kind: 'implemented-component',
-        def,
-        Component: makePlaceholder(name, spec),
-        defaults: defaultsOf(spec),
-      };
+  const fallbackComponents: Record<string, ManifestComponent> = {
+    Screen: {
+      description: 'Fallback screen container used while the app build is loading.',
+      props: {
+        type: 'object',
+        properties: {
+          title: { type: 'string' },
+          padding: { type: 'string', enum: ['none', 'xs', 'sm', 'md', 'lg', 'xl'], default: 'md' },
+        },
+      },
+      events: {},
+      children: true,
+      slots: ['footer'],
+      templates: [],
     },
-  );
+    Stack: {
+      description: 'Fallback layout container.',
+      props: {
+        type: 'object',
+        properties: {
+          direction: { type: 'string', enum: ['row', 'column'], default: 'column' },
+          gap: { type: 'string', enum: ['none', 'xs', 'sm', 'md', 'lg', 'xl'], default: 'sm' },
+        },
+      },
+      events: {},
+      children: true,
+      slots: [],
+      templates: [],
+    },
+    Text: {
+      description: 'Fallback text block.',
+      props: {
+        type: 'object',
+        properties: {
+          text: { anyOf: [{ type: 'string' }, { type: 'number' }] },
+          variant: { type: 'string', enum: ['title', 'subtitle', 'body', 'caption'], default: 'body' },
+        },
+      },
+      events: {},
+      children: false,
+      slots: [],
+      templates: [],
+    },
+    Button: {
+      description: 'Fallback button.',
+      props: {
+        type: 'object',
+        properties: {
+          label: { type: 'string' },
+          disabled: { type: 'boolean', default: false },
+          loading: { type: 'boolean', default: false },
+        },
+      },
+      events: { press: { type: 'object' } },
+      children: false,
+      slots: [],
+      templates: [],
+    },
+  };
+  const manifestComponents = { ...fallbackComponents, ...(manifest?.components ?? {}) };
+  const components: ImplementedComponent[] = Object.entries(manifestComponents).map(([name, spec]) => {
+    const def = {
+      kind: 'component',
+      name,
+      description: spec.description,
+      props: z.looseObject({}),
+      events: Object.fromEntries(Object.keys(spec.events).map((e) => [e, z.unknown()])),
+      children: spec.children,
+      slots: spec.slots,
+      templates: spec.templates,
+      bind: spec.bind,
+    } as unknown as ComponentDef;
+    return {
+      kind: 'implemented-component',
+      def,
+      Component: makePlaceholder(name, spec),
+      defaults: defaultsOf(spec),
+    };
+  });
   const actions = Object.keys(manifest?.actions ?? {}).map((name) =>
     implementAction(defineAction({ name, args: z.looseObject({}) }), () =>
       console.info('[preview] action', name),

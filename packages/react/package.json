@@ -1,0 +1,58 @@
+{
+  "name": "@zyrox/react",
+  "version": "0.1.0",
+  "description": "Zyrox renderer for React and React Native. Bring your own components.",
+  "type": "module",
+  "sideEffects": [
+    "./src/index.ts",
+    "./src/index.native.ts"
+  ],
+  "exports": {
+    ".": {
+      "react-native": "./src/index.native.ts",
+      "default": "./src/index.ts"
+    },
+    "./preview": {
+      "react-native": "./src/preview.native.ts",
+      "default": "./src/preview.ts"
+    },
+    "./overlays": {
+      "react-native": "./src/overlays.native.tsx",
+      "default": "./src/overlays.tsx"
+    },
+    "./remote": "./src/remote.tsx"
+  },
+  "react-native": "./src/index.native.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@zyrox/core": "workspace:*",
+    "@zyrox/protocol": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18.2",
+    "react-native": ">=0.76"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.3",
+    "@types/react": "19.2.18",
+    "jsdom": "30.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.3",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
+  }
+}

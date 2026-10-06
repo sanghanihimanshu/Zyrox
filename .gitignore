@@ -13,3 +13,5 @@ test-results/
 *.log
 .DS_Store
 *.tsbuildinfo
+.zyrox-data/
+*.zyrox-data

@@ -1,10 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
-import { FolderPlus, LogOut } from 'lucide-react';
+import { FolderPlus, LogOut, Trash2, UserRound } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { post } from '../lib/api';
+import { del, post } from '../lib/api';
 import { queryClient, useMe } from '../lib/queries';
-import { Badge, Button, Card, Dialog, Empty, errorMessage, Field, Input, PageHeader, Spinner } from '../ui';
+import {
+  Badge,
+  Button,
+  Card,
+  Dialog,
+  Empty,
+  errorMessage,
+  Field,
+  IconButton,
+  Input,
+  PageHeader,
+  Spinner,
+  useToast,
+} from '../ui';
 import { Logo } from './Logo';
 
 export function Projects() {
@@ -27,6 +40,13 @@ export function Projects() {
         </div>
         <div className="flex items-center gap-3 text-sm text-zinc-500">
           {me.data?.user.email}
+          <Link
+            href="/profile"
+            className="flex items-center gap-1 rounded px-2 py-1 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          >
+            <UserRound className="size-3.5" />
+            Profile
+          </Link>
           <Button
             variant="ghost"
             size="sm"
@@ -54,16 +74,8 @@ export function Projects() {
         <Spinner />
       ) : me.data?.projects.length ? (
         <div className="grid gap-3 sm:grid-cols-2">
-          {me.data.projects.map((p) => (
-            <Link key={p.id} href={`/p/${p.slug}`}>
-              <Card className="cursor-pointer p-4 transition-shadow hover:shadow-md">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">{p.name}</span>
-                  <Badge>{p.role}</Badge>
-                </div>
-                <p className="mt-1 font-mono text-xs text-zinc-500">{p.slug}</p>
-              </Card>
-            </Link>
+          {me.data.projects.map((project) => (
+            <ProjectRow key={project.id} project={project} />
           ))}
         </div>
       ) : (
@@ -72,6 +84,46 @@ export function Projects() {
         </Empty>
       )}
       <CreateProject open={creating} onClose={() => setCreating(false)} />
+    </div>
+  );
+}
+
+function ProjectRow({
+  project,
+}: {
+  project: NonNullable<ReturnType<typeof useMe>['data']>['projects'][number];
+}) {
+  const toast = useToast();
+  const remove = useMutation({
+    mutationFn: () => del(`/projects/${project.slug}`),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+      toast(`Deleted ${project.name}`, 'success');
+    },
+    onError: (error) => toast(errorMessage(error), 'error'),
+  });
+  return (
+    <div className="flex min-w-0 items-center gap-2">
+      <Link href={`/p/${project.slug}`} className="min-w-0 flex-1">
+        <Card className="cursor-pointer p-4 transition-shadow hover:shadow-md">
+          <div className="flex items-center justify-between">
+            <span className="font-medium">{project.name}</span>
+            <Badge>{project.role}</Badge>
+          </div>
+          <p className="mt-1 font-mono text-xs text-zinc-500">{project.slug}</p>
+        </Card>
+      </Link>
+      {project.role === 'admin' ? (
+        <IconButton
+          label={`Delete ${project.name}`}
+          icon={<Trash2 className="size-4" />}
+          disabled={remove.isPending}
+          onClick={() => {
+            if (confirm(`Delete ${project.name} and all of its data? This cannot be undone.`))
+              remove.mutate();
+          }}
+        />
+      ) : null}
     </div>
   );
 }

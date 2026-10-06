@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:zyrox:ui-actions:1",
+  "title": "Zyrox UI actions",
+  "description": "Actions a backend sends to a Zyrox app: in API responses as `$actions`, or as messages over SSE, WebSocket, push or polling.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/message"
+    },
+    {
+      "$ref": "#/$defs/actions"
+    }
+  ],
+  "$defs": {
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "button": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "style": {
+          "enum": ["default", "primary", "cancel", "destructive"]
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        }
+      },
+      "required": ["label"]
+    },
+    "action": {
+      "type": "object",
+      "required": ["do"],
+      "properties": {
+        "do": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "navigate"
+            },
+            "to": {
+              "type": "string"
+            },
+            "params": {
+              "type": "object"
+            },
+            "presentation": {
+              "enum": ["push", "replace", "modal", "sheet", "reset"]
+            },
+            "transition": {
+              "type": "string"
+            }
+          },
+          "required": ["do", "to"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "back"
+            },
+            "result": {
+              "description": "Any JSON value"
+            }
+          },
+          "required": ["do"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "openUrl"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": ["do", "url"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "sheet"
+            },
+            "id": {
+              "type": "string"
+            },
+            "screen": {
+              "type": "string"
+            },
+            "document": {
+              "type": "object",
+              "required": ["zyrox", "kind", "key", "root"]
+            },
+            "params": {
+              "type": "object"
+            },
+            "content": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string"
+                },
+                "buttons": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/button"
+                  }
+                }
+              }
+            },
+            "title": {
+              "type": "string"
+            },
+            "size": {
+              "enum": ["auto", "half", "full"]
+            },
+            "dismissible": {
+              "type": "boolean"
+            },
+            "onClose": {
+              "$ref": "#/$defs/actions"
+            }
+          },
+          "required": ["do"],
+          "anyOf": [
+            {
+              "required": ["screen"]
+            },
+            {
+              "required": ["document"]
+            },
+            {
+              "required": ["content"]
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "closeSheet"
+            },
+            "id": {
+              "type": "string"
+            },
+            "result": {
+              "description": "Any JSON value"
+            }
+          },
+          "required": ["do"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "alert"
+            },
+            "title": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "buttons": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/button"
+              }
+            }
+          },
+          "required": ["do", "title"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "toast"
+            },
+            "message": {
+              "type": "string"
+            },
+            "tone": {
+              "enum": ["info", "success", "warning", "danger"]
+            },
+            "duration": {
+              "type": "number",
+              "minimum": 0
+            },
+            "action": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "actions": {
+                  "$ref": "#/$defs/actions"
+                }
+              },
+              "required": ["label"]
+            }
+          },
+          "required": ["do", "message"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "refresh"
+            },
+            "data": {
+              "type": "string"
+            }
+          },
+          "required": ["do"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "track"
+            },
+            "event": {
+              "type": "string"
+            },
+            "props": {
+              "type": "object"
+            }
+          },
+          "required": ["do", "event"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "setState"
+            },
+            "path": {
+              "type": "string"
+            },
+            "value": {
+              "description": "Any JSON value"
+            }
+          },
+          "required": ["do", "path"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "setLocale"
+            },
+            "locale": {
+              "type": "string"
+            }
+          },
+          "required": ["do", "locale"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "setErrors"
+            },
+            "form": {
+              "type": "string"
+            },
+            "errors": {
+              "type": ["object", "array"]
+            }
+          },
+          "required": ["do", "form", "errors"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "resetForm"
+            },
+            "form": {
+              "type": "string"
+            },
+            "values": {
+              "description": "Any JSON value"
+            }
+          },
+          "required": ["do", "form"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "do": {
+              "const": "if"
+            },
+            "cond": {
+              "description": "Any JSON value"
+            },
+            "then": {
+              "$ref": "#/$defs/actions"
+            },
+            "else": {
+              "$ref": "#/$defs/actions"
+            }
+          },
+          "required": ["do", "cond"]
+        },
+        {
+          "description": "An action the app registered (allowed only when listed in the app's remoteActions)",
+          "type": "object",
+          "properties": {
+            "do": {
+              "type": "string",
+              "not": {
+                "enum": [
+                  "navigate",
+                  "back",
+                  "openUrl",
+                  "sheet",
+                  "closeSheet",
+                  "alert",
+                  "toast",
+                  "refresh",
+                  "track",
+                  "setState",
+                  "setLocale",
+                  "setErrors",
+                  "resetForm",
+                  "if"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "on": {
+          "enum": ["screen_view", "track", "app_open", "foreground"]
+        },
+        "name": {
+          "type": "string"
+        },
+        "screen": {
+          "type": "string"
+        },
+        "if": {
+          "type": "string",
+          "description": "Expression, e.g. \"{{ event.props.total >= 499 }}\""
+        },
+        "once": {
+          "type": "boolean"
+        },
+        "cooldown": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Seconds"
+        },
+        "maxPerSession": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "delay": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Milliseconds"
+        },
+        "startsAt": {
+          "type": ["string", "number"]
+        },
+        "endsAt": {
+          "type": ["string", "number"]
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        }
+      },
+      "required": ["id", "on", "actions"]
+    },
+    "message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "actions": {
+          "$ref": "#/$defs/actions"
+        },
+        "triggers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/trigger"
+          }
+        },
+        "expiresAt": {
+          "type": ["string", "number"]
+        }
+      },
+      "anyOf": [
+        {
+          "required": ["actions"]
+        },
+        {
+          "required": ["triggers"]
+        }
+      ]
+    }
+  }
+}

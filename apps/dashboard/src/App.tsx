@@ -4,6 +4,7 @@ import { setUnauthorizedHandler } from './lib/api';
 import { queryClient, useAuthStatus } from './lib/queries';
 import { Layout } from './pages/Layout';
 import { Login } from './pages/Login';
+import { Profile } from './pages/Profile';
 import { Projects } from './pages/Projects';
 import { Spinner } from './ui';
 
@@ -29,6 +30,7 @@ export function App() {
   return (
     <Switch>
       <Route path="/login">{signedIn ? <Redirect to="/" /> : <Login />}</Route>
+      <Route path="/profile">{signedIn ? <Profile /> : <Redirect to="/login" />}</Route>
       <Route path="/p/:project" nest>
         {signedIn ? <Layout /> : <Redirect to="/login" />}
       </Route>

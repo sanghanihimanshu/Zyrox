@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { Blocks, FilePlus2, LayoutTemplate, Search } from 'lucide-react';
+import { Blocks, FilePlus2, LayoutTemplate, Search, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { post } from '../lib/api';
+import { del, post } from '../lib/api';
 import { can, queryClient, useDocuments, useLatestManifest } from '../lib/queries';
 import type { DocumentSummary } from '../lib/types';
 import {
@@ -13,12 +13,14 @@ import {
   Empty,
   errorMessage,
   Field,
+  IconButton,
   Input,
   PageHeader,
   Select,
   Spinner,
   Tabs,
   timeAgo,
+  useToast,
 } from '../ui';
 import { useProjectContext } from './Layout';
 
@@ -88,8 +90,14 @@ export function Documents() {
         <Spinner />
       ) : list.length ? (
         <Card className="divide-y divide-zinc-100 dark:divide-zinc-800">
-          {list.map((d) => (
-            <DocumentRow key={d.id} doc={d} envs={environments.map((e) => e.key)} />
+            {list.map((d) => (
+              <DocumentRow
+                key={d.id}
+                doc={d}
+                envs={environments.map((e) => e.key)}
+                projectSlug={project.slug}
+                canDelete={can(role, 'admin')}
+              />
           ))}
         </Card>
       ) : (
@@ -112,37 +120,68 @@ export function Documents() {
   );
 }
 
-function DocumentRow({ doc, envs }: { doc: DocumentSummary; envs: string[] }) {
+function DocumentRow({
+  doc,
+  envs,
+  projectSlug,
+  canDelete,
+}: {
+  doc: DocumentSummary;
+  envs: string[];
+  projectSlug: string;
+  canDelete: boolean;
+}) {
+  const toast = useToast();
+  const remove = useMutation({
+    mutationFn: () => del(`/projects/${projectSlug}/documents/${doc.key}`),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['documents', projectSlug] });
+      toast(`Deleted ${doc.kind} ${doc.key}`, 'success');
+    },
+    onError: (error) => toast(errorMessage(error), 'error'),
+  });
   return (
-    <Link
-      href={`/edit/${doc.key}`}
-      className="flex items-center gap-4 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
-    >
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="truncate font-medium">{doc.title || doc.key}</span>
-          {doc.dirty ? <Badge tone="amber">Unpublished changes</Badge> : null}
+    <div className="flex items-center gap-2 px-2">
+      <Link
+        href={`/edit/${doc.key}`}
+        className="flex min-w-0 flex-1 items-center gap-4 px-2 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
+      >
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <span className="truncate font-medium">{doc.title || doc.key}</span>
+            {doc.dirty ? <Badge tone="amber">Unpublished changes</Badge> : null}
+          </div>
+          <span className="font-mono text-xs text-zinc-500">{doc.key}</span>
         </div>
-        <span className="font-mono text-xs text-zinc-500">{doc.key}</span>
-      </div>
-      <div className="hidden items-center gap-1.5 sm:flex">
-        {envs.map((env) =>
-          doc.live[env] ? (
-            <Badge
-              key={env}
-              tone="green"
-              title={doc.live[env]!.rules ? `${doc.live[env]!.rules} targeting rule(s)` : undefined}
-            >
-              {env} v{doc.live[env]!.number}
-              {doc.live[env]!.rules ? ' +rules' : ''}
-            </Badge>
-          ) : (
-            <Badge key={env}>{env} —</Badge>
-          ),
-        )}
-      </div>
-      <span className="w-24 text-right text-xs text-zinc-500">{timeAgo(doc.updatedAt)}</span>
-    </Link>
+        <div className="hidden items-center gap-1.5 sm:flex">
+          {envs.map((env) =>
+            doc.live[env] ? (
+              <Badge
+                key={env}
+                tone="green"
+                title={doc.live[env]!.rules ? `${doc.live[env]!.rules} targeting rule(s)` : undefined}
+              >
+                {env} v{doc.live[env]!.number}
+                {doc.live[env]!.rules ? ' +rules' : ''}
+              </Badge>
+            ) : (
+              <Badge key={env}>{env} —</Badge>
+            ),
+          )}
+        </div>
+        <span className="w-24 text-right text-xs text-zinc-500">{timeAgo(doc.updatedAt)}</span>
+      </Link>
+      {canDelete ? (
+        <IconButton
+          label={`Delete ${doc.kind} ${doc.key}`}
+          icon={<Trash2 className="size-4" />}
+          disabled={remove.isPending}
+          onClick={() => {
+            if (confirm(`Delete ${doc.kind} ${doc.key}? It will be archived.`)) remove.mutate();
+          }}
+        />
+      ) : null}
+    </div>
   );
 }
 

@@ -6,6 +6,7 @@ import {
   LayoutTemplate,
   Rocket,
   Settings as SettingsIcon,
+  UserRound,
 } from 'lucide-react';
 import { createContext, type ReactNode, useContext } from 'react';
 import { Link, Route, Switch, useLocation, useParams } from 'wouter';
@@ -105,6 +106,12 @@ export function Layout() {
                 {label}
               </NavLink>
             ))}
+            <div className="mt-auto border-t border-zinc-200 pt-2 dark:border-zinc-800">
+              <NavLink href="/profile">
+                <UserRound className="size-4" />
+                Profile
+              </NavLink>
+            </div>
           </aside>
           <main className="min-w-0 flex-1 overflow-auto">
             <div className="mx-auto max-w-6xl p-6">

@@ -1,0 +1,29 @@
+{
+  "name": "@zyrox/skills",
+  "version": "0.1.0",
+  "description": "Agent skills, component scaffolding and design-system rules for building with Zyrox.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "skills"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@zyrox/protocol": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "@types/react": "19.2.18",
+    "@zyrox/react": "workspace:*",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "typescript": "6.0.3",
+    "vitest": "5.0.3"
+  }
+}

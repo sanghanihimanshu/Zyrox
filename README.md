@@ -44,6 +44,8 @@ The example apps run without a server (bundled documents, in-process example bac
 | --- | --- |
 | [Library guide](docs/library.md) | Adding Zyrox to a React or React Native app: components, provider, screens, data, actions, state, languages, motion, analytics, caching, testing |
 | [Self-hosting](docs/self-hosting.md) | Running the server and dashboard: Docker, Postgres, configuration, proxies and CDNs, scaling, backups, security, AI and translation |
+| [Dashboard guide](docs/dashboard.md) | Profiles, projects, screens, blocks, roles, and publishing |
+| [Package releases](docs/releasing.md) | Publishing workspace packages to npm from GitHub Releases |
 | [Headless](docs/headless.md) | The HTTP API and OpenAPI spec, webhooks, server-side rendering, draft previews in real app builds, export and import |
 | [UI from your backend](docs/backend-ui.md) | Sheets, alerts, toasts, redirects and event-trigger rules driven by any backend: `$actions` in responses, SSE / WebSocket / push messages, trigger rules |
 | [Dynamic feed example](docs/dynamic-feed.md) | A Zepto / Blinkit / Amazon-style home feed: backend-ordered sections rendered by Zyrox, static and dynamic API calls |

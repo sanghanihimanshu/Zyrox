@@ -1,0 +1,46 @@
+name: Publish packages
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: startsWith(github.event.release.tag_name, 'v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - name: Verify release version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readdirSync, readFileSync } from 'node:fs';
+
+          for (const directory of readdirSync('packages', { withFileTypes: true })) {
+            if (!directory.isDirectory()) continue;
+            const pkg = JSON.parse(readFileSync(`packages/${directory.name}/package.json`, 'utf8'));
+            if (!pkg.private && `v${pkg.version}` !== process.env.RELEASE_TAG) {
+              throw new Error(`${pkg.name} is ${pkg.version}; expected ${process.env.RELEASE_TAG.slice(1)}`);
+            }
+          }
+          NODE
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm size
+      - run: pnpm -r --if-present build
+      - run: pnpm -r publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

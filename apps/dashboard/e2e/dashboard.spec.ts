@@ -111,6 +111,20 @@ test('publish, release and deliver', async () => {
   await shot('releases');
 });
 
+test('publish a block from the dashboard', async () => {
+  await page.goto('/p/shop-app');
+  await page.getByRole('tab', { name: 'Blocks' }).click();
+  await page.getByRole('button', { name: 'New block' }).click();
+  await page.getByLabel('Key').fill('promo-badge');
+  await page.getByLabel('Title').fill('Promo badge');
+  await page.getByRole('button', { name: 'Create' }).click();
+  await expect(page.getByText('block · promo-badge')).toBeVisible();
+  await page.getByRole('button', { name: 'Publish', exact: true }).click();
+  await expect(page.getByText('Valid against the latest app build (1.0.0)')).toBeVisible();
+  await page.getByRole('button', { name: 'Publish block' }).click();
+  await expect(page.getByText('Published v1', { exact: true })).toBeVisible();
+});
+
 test('the assistant edits the screen with ops that can be undone', async () => {
   await page.goto('/p/shop-app/edit/promo');
   await page.getByRole('button', { name: 'Assistant' }).click();

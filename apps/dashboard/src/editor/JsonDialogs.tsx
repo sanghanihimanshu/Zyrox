@@ -77,7 +77,15 @@ export default function JsonModeDialog({
           defaultValue={initial}
           theme={dark ? 'vs-dark' : 'vs'}
           onChange={(v) => setText(v ?? '')}
-          options={{ minimap: { enabled: false }, fontSize: 12, tabSize: 2, scrollBeyondLastLine: false }}
+          options={{
+            minimap: { enabled: false },
+            fontSize: 12,
+            tabSize: 2,
+            scrollBeyondLastLine: false,
+            quickSuggestions: { other: true, comments: false, strings: true },
+            suggestOnTriggerCharacters: true,
+            wordBasedSuggestions: 'off',
+          }}
         />
       </div>
     </Dialog>
