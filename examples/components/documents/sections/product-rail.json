@@ -1,0 +1,179 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "sections/product-rail",
+  "title": "Product rail (feed section)",
+  "params": {
+    "title": {
+      "type": "string",
+      "default": "Products"
+    },
+    "api": {
+      "type": "string",
+      "required": true
+    },
+    "collection": {
+      "type": "string"
+    }
+  },
+  "data": {
+    "products": {
+      "url": "{{ params.api }}",
+      "cache": 60,
+      "mock": {
+        "title": "Bestsellers",
+        "products": [
+          {
+            "id": "banana",
+            "name": "Robusta Banana",
+            "unit": "6 pcs",
+            "price": 49,
+            "mrp": 60,
+            "emoji": "🍌",
+            "color": "#fef3c7",
+            "eta": 8,
+            "category": "fruits"
+          },
+          {
+            "id": "milk",
+            "name": "Toned Milk",
+            "unit": "500 ml",
+            "price": 28,
+            "emoji": "🥛",
+            "color": "#e0f2fe",
+            "eta": 9,
+            "category": "dairy"
+          },
+          {
+            "id": "chips",
+            "name": "Salted Chips",
+            "unit": "90 g",
+            "price": 20,
+            "emoji": "🥔",
+            "color": "#fef9c3",
+            "eta": 10,
+            "category": "snacks"
+          }
+        ],
+        "page": 1,
+        "next": null
+      }
+    }
+  },
+  "root": {
+    "id": "rail",
+    "type": "Stack",
+    "if": "{{ loading.products || len(data.products.products) > 0 }}",
+    "props": {
+      "gap": "sm"
+    },
+    "children": [
+      {
+        "id": "rail-header",
+        "type": "Stack",
+        "props": {
+          "direction": "row",
+          "justify": "between",
+          "align": "center"
+        },
+        "children": [
+          {
+            "id": "rail-title",
+            "type": "Text",
+            "props": {
+              "text": "{{ params.title }}",
+              "variant": "subtitle"
+            }
+          },
+          {
+            "id": "rail-see-all",
+            "type": "Button",
+            "if": "{{ params.collection }}",
+            "props": {
+              "label": "See all",
+              "variant": "ghost"
+            },
+            "a11y": {
+              "label": "See all {{ params.title }}"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "navigate",
+                  "to": "shop-collection",
+                  "params": {
+                    "id": "{{ params.collection }}"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "rail-list",
+        "type": "List",
+        "props": {
+          "items": "{{ data.products.products ?? [] }}",
+          "horizontal": true,
+          "itemWidth": 150
+        },
+        "templates": {
+          "item": {
+            "id": "product",
+            "type": "ProductCard",
+            "props": {
+              "name": "{{ item.name }}",
+              "unit": "{{ item.unit }}",
+              "price": "{{ item.price }}",
+              "mrp": "{{ item.mrp }}",
+              "emoji": "{{ item.emoji }}",
+              "color": "{{ item.color }}",
+              "eta": "{{ item.eta }}",
+              "qty": "{{ app.cart.items[item.id] ?? 0 }}",
+              "width": 150
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "navigate",
+                  "to": "shop-product",
+                  "params": {
+                    "id": "{{ item.id }}"
+                  }
+                }
+              ],
+              "add": [
+                {
+                  "do": "addToCart",
+                  "productId": "{{ item.id }}",
+                  "qty": 1,
+                  "price": "{{ item.price }}"
+                },
+                {
+                  "do": "track",
+                  "event": "add_to_cart",
+                  "props": {
+                    "product": "{{ item.id }}",
+                    "source": "{{ params.title ?? 'feed' }}",
+                    "price": "{{ item.price }}"
+                  }
+                }
+              ],
+              "remove": [
+                {
+                  "do": "removeFromCart",
+                  "productId": "{{ item.id }}",
+                  "qty": 1
+                }
+              ]
+            },
+            "a11y": {
+              "label": "{{ item.name }}"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

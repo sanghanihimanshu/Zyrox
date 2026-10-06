@@ -1,0 +1,217 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "shop-collection",
+  "title": "Collection",
+  "params": {
+    "id": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "state": {
+    "more": [],
+    "loadingMore": false
+  },
+  "data": {
+    "first": {
+      "url": "/collections/{{ params.id }}",
+      "cache": 60,
+      "mock": {
+        "id": "fruits",
+        "title": "Fruits",
+        "products": [
+          {
+            "id": "banana",
+            "name": "Robusta Banana",
+            "unit": "6 pcs",
+            "price": 49,
+            "mrp": 60,
+            "emoji": "🍌",
+            "color": "#fef3c7",
+            "eta": 8,
+            "category": "fruits"
+          },
+          {
+            "id": "milk",
+            "name": "Toned Milk",
+            "unit": "500 ml",
+            "price": 28,
+            "emoji": "🥛",
+            "color": "#e0f2fe",
+            "eta": 9,
+            "category": "dairy"
+          },
+          {
+            "id": "chips",
+            "name": "Salted Chips",
+            "unit": "90 g",
+            "price": 20,
+            "emoji": "🥔",
+            "color": "#fef9c3",
+            "eta": 10,
+            "category": "snacks"
+          }
+        ],
+        "page": 1,
+        "next": 2
+      }
+    }
+  },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": {
+      "title": "{{ data.first.title ?? '' }}"
+    },
+    "children": [
+      {
+        "id": "loading",
+        "type": "Text",
+        "if": "{{ loading.first && !data.first }}",
+        "props": {
+          "text": "Loading…",
+          "tone": "muted"
+        }
+      },
+      {
+        "id": "grid",
+        "type": "List",
+        "props": {
+          "items": "{{ concat(data.first.products, state.more) }}",
+          "columns": 2
+        },
+        "templates": {
+          "item": {
+            "id": "product",
+            "type": "ProductCard",
+            "props": {
+              "name": "{{ item.name }}",
+              "unit": "{{ item.unit }}",
+              "price": "{{ item.price }}",
+              "mrp": "{{ item.mrp }}",
+              "emoji": "{{ item.emoji }}",
+              "color": "{{ item.color }}",
+              "eta": "{{ item.eta }}",
+              "qty": "{{ app.cart.items[item.id] ?? 0 }}"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "navigate",
+                  "to": "shop-product",
+                  "params": {
+                    "id": "{{ item.id }}"
+                  }
+                }
+              ],
+              "add": [
+                {
+                  "do": "addToCart",
+                  "productId": "{{ item.id }}",
+                  "qty": 1,
+                  "price": "{{ item.price }}"
+                },
+                {
+                  "do": "track",
+                  "event": "add_to_cart",
+                  "props": {
+                    "product": "{{ item.id }}",
+                    "source": "{{ params.id }}",
+                    "price": "{{ item.price }}"
+                  }
+                }
+              ],
+              "remove": [
+                {
+                  "do": "removeFromCart",
+                  "productId": "{{ item.id }}",
+                  "qty": 1
+                }
+              ]
+            },
+            "a11y": {
+              "label": "{{ item.name }}"
+            }
+          }
+        }
+      },
+      {
+        "id": "load-more",
+        "type": "Button",
+        "if": "{{ state.next ?? data.first.next }}",
+        "props": {
+          "label": "Load more",
+          "variant": "secondary",
+          "loading": "{{ state.loadingMore }}"
+        },
+        "on": {
+          "press": [
+            {
+              "do": "setState",
+              "path": "loadingMore",
+              "value": true
+            },
+            {
+              "do": "request",
+              "url": "/collections/{{ params.id }}?page={{ state.next ?? data.first.next }}",
+              "onSuccess": [
+                {
+                  "do": "setState",
+                  "path": "more",
+                  "value": "{{ concat(state.more, event.products) }}"
+                },
+                {
+                  "do": "setState",
+                  "path": "next",
+                  "value": "{{ event.next ?? 0 }}"
+                },
+                {
+                  "do": "setState",
+                  "path": "loadingMore",
+                  "value": false
+                }
+              ],
+              "onError": [
+                {
+                  "do": "setState",
+                  "path": "loadingMore",
+                  "value": false
+                },
+                {
+                  "do": "toast",
+                  "message": "Couldn't load more: {{ event.message }}",
+                  "tone": "danger"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "slots": {
+      "footer": [
+        {
+          "id": "cart-bar",
+          "type": "Button",
+          "if": "{{ app.cart.count > 0 }}",
+          "props": {
+            "label": "{{ app.cart.count }} {{ app.cart.count == 1 ? 'item' : 'items' }} · {{ format.currency(app.cart.total, 'INR') }} · View cart"
+          },
+          "on": {
+            "press": [
+              {
+                "do": "navigate",
+                "to": "cart"
+              }
+            ]
+          },
+          "motion": {
+            "enter": "slideUp",
+            "exit": "fade"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "register",
+  "title": "Create your account",
+  "meta": {
+    "about": "Declarative form validation: required, length, pattern, email, cross-field equals, conditional business fields, live username availability from the API, and field errors from the server."
+  },
+  "state": {
+    "account": {
+      "name": "",
+      "email": "",
+      "username": "",
+      "password": "",
+      "confirm": "",
+      "business": false,
+      "company": "",
+      "gstin": "",
+      "pincode": ""
+    },
+    "submitting": false,
+    "done": null
+  },
+  "data": {
+    "availability": {
+      "url": "/username-available?u={{ trim(state.account.username) }}",
+      "if": "{{ len(trim(state.account.username)) >= 3 }}",
+      "debounce": 400,
+      "mock": {
+        "username": "ada",
+        "available": true
+      }
+    }
+  },
+  "forms": {
+    "account": {
+      "fields": {
+        "name": {
+          "required": "Enter your name",
+          "minLength": {
+            "value": 2,
+            "message": "Enter your full name"
+          }
+        },
+        "email": {
+          "required": "Enter your email",
+          "email": true
+        },
+        "username": {
+          "required": "Choose a username",
+          "minLength": 3,
+          "pattern": {
+            "value": "^[a-z0-9_]+$",
+            "message": "Use lowercase letters, numbers and _"
+          },
+          "rules": [
+            {
+              "check": "{{ data.availability.username != value || data.availability.available }}",
+              "message": "“{{ value }}” is taken"
+            }
+          ]
+        },
+        "password": {
+          "required": "Choose a password",
+          "minLength": 8,
+          "pattern": {
+            "value": "[0-9]",
+            "message": "Add at least one number"
+          }
+        },
+        "confirm": {
+          "required": "Repeat your password",
+          "equals": {
+            "value": "{{ state.account.password }}",
+            "message": "Passwords don't match"
+          }
+        },
+        "company": {
+          "if": "{{ state.account.business }}",
+          "required": "Enter your company name"
+        },
+        "gstin": {
+          "if": "{{ state.account.business }}",
+          "required": "Enter your GSTIN",
+          "pattern": {
+            "value": "^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$",
+            "message": "Enter a valid 15-character GSTIN"
+          }
+        },
+        "pincode": {
+          "required": "Enter your PIN code",
+          "pattern": {
+            "value": "^[1-9][0-9]{5}$",
+            "message": "Enter a 6-digit PIN code"
+          }
+        }
+      }
+    }
+  },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": {
+      "title": "Create your account"
+    },
+    "children": [
+      {
+        "id": "name",
+        "type": "TextField",
+        "bind": "account.name",
+        "props": {
+          "label": "Full name"
+        }
+      },
+      {
+        "id": "email",
+        "type": "TextField",
+        "bind": "account.email",
+        "props": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        }
+      },
+      {
+        "id": "username-row",
+        "type": "Stack",
+        "props": {
+          "gap": "xs"
+        },
+        "children": [
+          {
+            "id": "username",
+            "type": "TextField",
+            "bind": "account.username",
+            "props": {
+              "label": "Username"
+            }
+          },
+          {
+            "id": "username-status",
+            "type": "Text",
+            "if": "{{ len(trim(state.account.username)) >= 3 && !forms.account.errors.username }}",
+            "props": {
+              "text": "{{ data.availability.username == trim(state.account.username) && !loading.availability ? '✓ Available' : 'Checking…' }}",
+              "variant": "caption",
+              "tone": "{{ data.availability.username == trim(state.account.username) && !loading.availability ? 'success' : 'muted' }}"
+            }
+          }
+        ]
+      },
+      {
+        "id": "password",
+        "type": "TextField",
+        "bind": "account.password",
+        "props": {
+          "label": "Password",
+          "secure": true
+        }
+      },
+      {
+        "id": "confirm",
+        "type": "TextField",
+        "bind": "account.confirm",
+        "props": {
+          "label": "Repeat password",
+          "secure": true
+        }
+      },
+      {
+        "id": "business",
+        "type": "Toggle",
+        "bind": "account.business",
+        "props": {
+          "label": "Business account"
+        }
+      },
+      {
+        "id": "company",
+        "type": "TextField",
+        "if": "{{ state.account.business }}",
+        "bind": "account.company",
+        "props": {
+          "label": "Company name"
+        },
+        "motion": {
+          "enter": "fade"
+        }
+      },
+      {
+        "id": "gstin",
+        "type": "TextField",
+        "if": "{{ state.account.business }}",
+        "bind": "account.gstin",
+        "props": {
+          "label": "GSTIN",
+          "placeholder": "22AAAAA0000A1Z5"
+        },
+        "motion": {
+          "enter": "fade"
+        }
+      },
+      {
+        "id": "pincode",
+        "type": "TextField",
+        "bind": "account.pincode",
+        "props": {
+          "label": "PIN code"
+        }
+      },
+      {
+        "id": "summary",
+        "type": "Text",
+        "if": "{{ forms.account.submitted && !forms.account.valid }}",
+        "props": {
+          "text": "Fix the highlighted fields to continue.",
+          "tone": "danger"
+        }
+      },
+      {
+        "id": "create",
+        "type": "Button",
+        "props": {
+          "label": "{{ state.submitting ? 'Creating…' : 'Create account' }}",
+          "loading": "{{ state.submitting }}"
+        },
+        "on": {
+          "press": [
+            {
+              "do": "validate",
+              "form": "account"
+            },
+            {
+              "do": "setState",
+              "path": "submitting",
+              "value": true
+            },
+            {
+              "do": "request",
+              "url": "/register",
+              "method": "POST",
+              "body": "{{ state.account }}",
+              "onSuccess": [
+                {
+                  "do": "setState",
+                  "path": "submitting",
+                  "value": false
+                },
+                {
+                  "do": "track",
+                  "event": "register"
+                },
+                {
+                  "do": "setState",
+                  "path": "done",
+                  "value": "{{ event.username }}"
+                }
+              ],
+              "onError": [
+                {
+                  "do": "setState",
+                  "path": "submitting",
+                  "value": false
+                },
+                {
+                  "do": "setErrors",
+                  "form": "account",
+                  "errors": "{{ event.body.errors ?? {} }}"
+                },
+                {
+                  "do": "if",
+                  "cond": "{{ !event.body.errors }}",
+                  "then": [
+                    {
+                      "do": "toast",
+                      "message": "{{ event.message }}",
+                      "tone": "danger"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "done",
+        "type": "Badge",
+        "if": "{{ state.done }}",
+        "props": {
+          "label": "Welcome, @{{ state.done }}!",
+          "tone": "success"
+        }
+      }
+    ]
+  }
+}

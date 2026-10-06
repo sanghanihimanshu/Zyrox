@@ -1,0 +1,160 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "signup",
+  "title": "Sign up",
+  "state": {
+    "form": {
+      "name": "",
+      "email": "",
+      "terms": false
+    },
+    "submitting": false,
+    "error": null,
+    "result": null
+  },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": {
+      "title": "Create account"
+    },
+    "children": [
+      {
+        "id": "name",
+        "type": "TextField",
+        "props": {
+          "label": "Name",
+          "placeholder": "Ada Lovelace"
+        },
+        "bind": "form.name"
+      },
+      {
+        "id": "email",
+        "type": "TextField",
+        "props": {
+          "label": "Email",
+          "placeholder": "you@example.com"
+        },
+        "bind": "form.email"
+      },
+      {
+        "id": "terms",
+        "type": "Toggle",
+        "props": {
+          "label": "I accept the terms"
+        },
+        "bind": "form.terms"
+      },
+      {
+        "id": "terms-error",
+        "type": "Text",
+        "if": "{{ forms.form.shown.terms }}",
+        "props": {
+          "text": "{{ forms.form.shown.terms }}",
+          "tone": "danger",
+          "variant": "caption"
+        }
+      },
+      {
+        "id": "error",
+        "type": "Text",
+        "if": "{{ state.error }}",
+        "props": {
+          "text": "{{ state.error }}",
+          "tone": "danger"
+        }
+      },
+      {
+        "id": "submit",
+        "type": "Button",
+        "props": {
+          "label": "{{ state.submitting ? 'Creating…' : 'Create account' }}",
+          "loading": "{{ state.submitting }}"
+        },
+        "on": {
+          "press": [
+            {
+              "do": "validate",
+              "form": "form"
+            },
+            {
+              "do": "setState",
+              "path": "submitting",
+              "value": true
+            },
+            {
+              "do": "setState",
+              "path": "error",
+              "value": null
+            },
+            {
+              "do": "request",
+              "url": "/signup",
+              "method": "POST",
+              "body": "{{ state.form }}",
+              "into": "result",
+              "onSuccess": [
+                {
+                  "do": "setState",
+                  "path": "submitting",
+                  "value": false
+                },
+                {
+                  "do": "track",
+                  "event": "signup"
+                },
+                {
+                  "do": "navigate",
+                  "to": "welcome",
+                  "params": {
+                    "name": "{{ event.name }}"
+                  }
+                }
+              ],
+              "onError": [
+                {
+                  "do": "setState",
+                  "path": "submitting",
+                  "value": false
+                },
+                {
+                  "do": "setState",
+                  "path": "error",
+                  "value": "{{ event.body.errors ? null : event.message }}"
+                },
+                {
+                  "do": "if",
+                  "cond": "{{ event.body.errors }}",
+                  "then": [
+                    {
+                      "do": "setErrors",
+                      "form": "form",
+                      "errors": "{{ event.body.errors }}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "forms": {
+    "form": {
+      "fields": {
+        "name": {
+          "required": "Enter your name"
+        },
+        "email": {
+          "required": "Enter your email",
+          "email": "Enter a valid email"
+        },
+        "terms": {
+          "required": "Accept the terms to continue"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Zyrox example",
+    "slug": "zyrox-example",
+    "scheme": "zyroxexample",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": { "bundleIdentifier": "dev.zyrox.example" },
+    "android": { "package": "dev.zyrox.example" }
+  }
+}

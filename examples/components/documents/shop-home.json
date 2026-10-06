@@ -1,0 +1,495 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "shop-home",
+  "title": "Shop",
+  "meta": {
+    "about": "Layout and section looks come from Zyrox; which sections show, in what order, with what data, comes from the backend feed API."
+  },
+  "state": {
+    "q": ""
+  },
+  "data": {
+    "feed": {
+      "url": "/feed/home?segment={{ app.user.segment ?? '' }}",
+      "refresh": ["mount", "foreground"],
+      "cache": 30,
+      "mock": {
+        "header": {
+          "eta": "10 minutes",
+          "address": "Home · Indiranagar, Bengaluru"
+        },
+        "sections": [
+          {
+            "id": "hero",
+            "type": "banners",
+            "items": [
+              {
+                "id": "festive",
+                "title": "Festive store is live",
+                "subtitle": "Diyas, sweets and more in 10 minutes",
+                "emoji": "🪔",
+                "color": "#ffedd5",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "festive"
+                  }
+                }
+              },
+              {
+                "id": "fresh",
+                "title": "Farm-fresh fruits",
+                "subtitle": "Up to 25% off",
+                "emoji": "🍎",
+                "color": "#fee2e2",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "fruits"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "categories",
+            "type": "categories",
+            "title": "Shop by category",
+            "items": [
+              {
+                "id": "fruits",
+                "name": "Fruits",
+                "emoji": "🍎",
+                "color": "#fee2e2",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "fruits"
+                  }
+                }
+              },
+              {
+                "id": "dairy",
+                "name": "Dairy & Eggs",
+                "emoji": "🥛",
+                "color": "#e0f2fe",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "dairy"
+                  }
+                }
+              },
+              {
+                "id": "snacks",
+                "name": "Snacks",
+                "emoji": "🍿",
+                "color": "#fef9c3",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "snacks"
+                  }
+                }
+              },
+              {
+                "id": "drinks",
+                "name": "Drinks",
+                "emoji": "🥤",
+                "color": "#fee2e2",
+                "link": {
+                  "screen": "shop-collection",
+                  "params": {
+                    "id": "drinks"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "sale",
+            "type": "zyrox",
+            "screen": "sections/festive-sale",
+            "params": {
+              "title": "Festive sale: up to 30% off",
+              "code": "DIWALI30",
+              "collection": "festive"
+            }
+          },
+          {
+            "id": "bestsellers",
+            "type": "rail",
+            "title": "Bestsellers",
+            "api": {
+              "url": "/collections/bestsellers"
+            },
+            "seeAll": {
+              "screen": "shop-collection",
+              "params": {
+                "id": "bestsellers"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "results": {
+      "url": "/search?q={{ trim(state.q) }}",
+      "if": "{{ len(trim(state.q)) > 1 }}",
+      "debounce": 300,
+      "mock": {
+        "query": "mi",
+        "products": [
+          {
+            "id": "milk",
+            "name": "Toned Milk",
+            "unit": "500 ml",
+            "price": 28,
+            "emoji": "🥛",
+            "color": "#e0f2fe",
+            "eta": 9,
+            "category": "dairy"
+          }
+        ]
+      }
+    }
+  },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": {
+      "padding": "md"
+    },
+    "children": [
+      {
+        "id": "header",
+        "type": "Stack",
+        "props": {
+          "gap": "xs"
+        },
+        "children": [
+          {
+            "id": "eta",
+            "type": "Text",
+            "props": {
+              "text": "Delivery in {{ data.feed.header.eta ?? '10 minutes' }}",
+              "variant": "title"
+            }
+          },
+          {
+            "id": "address",
+            "type": "Text",
+            "if": "{{ data.feed.header.address }}",
+            "props": {
+              "text": "{{ data.feed.header.address }}",
+              "variant": "caption",
+              "tone": "muted"
+            }
+          }
+        ]
+      },
+      {
+        "id": "search",
+        "type": "TextField",
+        "bind": "q",
+        "props": {
+          "label": "Search",
+          "placeholder": "Search for milk, chips, fruits…"
+        }
+      },
+      {
+        "id": "results",
+        "type": "Stack",
+        "if": "{{ len(trim(state.q)) > 1 }}",
+        "props": {
+          "gap": "sm"
+        },
+        "children": [
+          {
+            "id": "results-title",
+            "type": "Text",
+            "props": {
+              "variant": "subtitle",
+              "text": "{{ loading.results ? 'Searching…' : 'Results for “' + trim(state.q) + '”' }}"
+            }
+          },
+          {
+            "id": "results-list",
+            "type": "List",
+            "props": {
+              "items": "{{ data.results.products ?? [] }}",
+              "columns": 2
+            },
+            "templates": {
+              "item": {
+                "id": "product",
+                "type": "ProductCard",
+                "props": {
+                  "name": "{{ item.name }}",
+                  "unit": "{{ item.unit }}",
+                  "price": "{{ item.price }}",
+                  "mrp": "{{ item.mrp }}",
+                  "emoji": "{{ item.emoji }}",
+                  "color": "{{ item.color }}",
+                  "eta": "{{ item.eta }}",
+                  "qty": "{{ app.cart.items[item.id] ?? 0 }}"
+                },
+                "on": {
+                  "press": [
+                    {
+                      "do": "navigate",
+                      "to": "shop-product",
+                      "params": {
+                        "id": "{{ item.id }}"
+                      }
+                    }
+                  ],
+                  "add": [
+                    {
+                      "do": "addToCart",
+                      "productId": "{{ item.id }}",
+                      "qty": 1,
+                      "price": "{{ item.price }}"
+                    },
+                    {
+                      "do": "track",
+                      "event": "add_to_cart",
+                      "props": {
+                        "product": "{{ item.id }}",
+                        "source": "search",
+                        "price": "{{ item.price }}"
+                      }
+                    }
+                  ],
+                  "remove": [
+                    {
+                      "do": "removeFromCart",
+                      "productId": "{{ item.id }}",
+                      "qty": 1
+                    }
+                  ]
+                },
+                "a11y": {
+                  "label": "{{ item.name }}"
+                }
+              }
+            },
+            "slots": {
+              "empty": [
+                {
+                  "id": "no-results",
+                  "type": "Text",
+                  "if": "{{ !loading.results }}",
+                  "props": {
+                    "text": "No matches. Try “milk” or “mango”.",
+                    "tone": "muted"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "feed-loading",
+        "type": "Text",
+        "if": "{{ loading.feed && !data.feed }}",
+        "props": {
+          "text": "Loading your store…",
+          "tone": "muted"
+        }
+      },
+      {
+        "id": "feed-error",
+        "type": "Stack",
+        "if": "{{ error.feed && !data.feed }}",
+        "props": {
+          "gap": "sm"
+        },
+        "children": [
+          {
+            "id": "feed-error-text",
+            "type": "Text",
+            "props": {
+              "text": "We couldn't load the store.",
+              "tone": "danger"
+            }
+          },
+          {
+            "id": "feed-retry",
+            "type": "Button",
+            "props": {
+              "label": "Try again",
+              "variant": "secondary"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "refresh",
+                  "data": "feed"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "feed",
+        "type": "List",
+        "if": "{{ len(trim(state.q)) <= 1 }}",
+        "props": {
+          "items": "{{ data.feed.sections ?? [] }}",
+          "gap": "lg"
+        },
+        "templates": {
+          "item": {
+            "id": "section",
+            "type": "Stack",
+            "if": "{{ includes(['banners', 'categories', 'rail', 'zyrox'], item.type) }}",
+            "props": {
+              "gap": "sm"
+            },
+            "meta": {
+              "note": "Section types this app build knows. New types from the backend are skipped."
+            },
+            "children": [
+              {
+                "id": "banners",
+                "type": "List",
+                "if": "{{ item.type == 'banners' }}",
+                "props": {
+                  "items": "{{ item.items }}",
+                  "horizontal": true,
+                  "itemWidth": 300
+                },
+                "templates": {
+                  "item": {
+                    "id": "banner",
+                    "type": "Tile",
+                    "props": {
+                      "title": "{{ item.title }}",
+                      "subtitle": "{{ item.subtitle }}",
+                      "emoji": "{{ item.emoji }}",
+                      "color": "{{ item.color }}",
+                      "size": "lg"
+                    },
+                    "on": {
+                      "press": [
+                        {
+                          "do": "track",
+                          "event": "banner_tap",
+                          "props": {
+                            "banner": "{{ item.id }}"
+                          }
+                        },
+                        {
+                          "do": "navigate",
+                          "to": "{{ item.link.screen }}",
+                          "params": "{{ item.link.params }}"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "id": "categories",
+                "type": "Stack",
+                "if": "{{ item.type == 'categories' }}",
+                "props": {
+                  "gap": "sm"
+                },
+                "children": [
+                  {
+                    "id": "categories-title",
+                    "type": "Text",
+                    "props": {
+                      "text": "{{ item.title }}",
+                      "variant": "subtitle"
+                    }
+                  },
+                  {
+                    "id": "category-grid",
+                    "type": "List",
+                    "props": {
+                      "items": "{{ item.items }}",
+                      "columns": 4,
+                      "gap": "sm"
+                    },
+                    "templates": {
+                      "item": {
+                        "id": "category",
+                        "type": "Tile",
+                        "props": {
+                          "title": "{{ item.name }}",
+                          "emoji": "{{ item.emoji }}",
+                          "color": "{{ item.color }}"
+                        },
+                        "on": {
+                          "press": [
+                            {
+                              "do": "navigate",
+                              "to": "{{ item.link.screen }}",
+                              "params": "{{ item.link.params }}"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "rail",
+                "type": "Section",
+                "if": "{{ item.type == 'rail' }}",
+                "props": {
+                  "screen": "sections/product-rail",
+                  "params": {
+                    "title": "{{ item.title }}",
+                    "api": "{{ item.api.url }}",
+                    "collection": "{{ item.seeAll.params.id }}"
+                  }
+                }
+              },
+              {
+                "id": "designed",
+                "type": "Section",
+                "if": "{{ item.type == 'zyrox' }}",
+                "props": {
+                  "screen": "{{ item.screen }}",
+                  "params": "{{ item.params ?? {} }}"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "slots": {
+      "footer": [
+        {
+          "id": "cart-bar",
+          "type": "Button",
+          "if": "{{ app.cart.count > 0 }}",
+          "props": {
+            "label": "{{ app.cart.count }} {{ app.cart.count == 1 ? 'item' : 'items' }} · {{ format.currency(app.cart.total, 'INR') }} · View cart"
+          },
+          "on": {
+            "press": [
+              {
+                "do": "navigate",
+                "to": "cart"
+              }
+            ]
+          },
+          "motion": {
+            "enter": "slideUp",
+            "exit": "fade"
+          }
+        }
+      ]
+    }
+  }
+}

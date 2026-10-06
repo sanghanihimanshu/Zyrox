@@ -1,0 +1,42 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "counter",
+  "title": "Counter",
+  "state": { "count": 0 },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": { "title": "Counter" },
+    "children": [
+      { "id": "value", "type": "Text", "props": { "text": "Count: {{ state.count }}", "variant": "title" } },
+      {
+        "id": "row",
+        "type": "Stack",
+        "props": { "direction": "row", "gap": "md" },
+        "children": [
+          {
+            "id": "dec",
+            "type": "Button",
+            "props": { "label": "-", "variant": "secondary", "disabled": "{{ state.count <= 0 }}" },
+            "on": { "press": [{ "do": "setState", "path": "count", "value": "{{ state.count - 1 }}" }] },
+            "a11y": { "label": "Decrease" }
+          },
+          {
+            "id": "inc",
+            "type": "Button",
+            "props": { "label": "+" },
+            "on": { "press": [{ "do": "setState", "path": "count", "value": "{{ state.count + 1 }}" }] },
+            "a11y": { "label": "Increase" }
+          }
+        ]
+      },
+      {
+        "id": "lots",
+        "type": "Badge",
+        "if": "{{ state.count >= 3 }}",
+        "props": { "label": "That's a lot", "tone": "success" }
+      }
+    ]
+  }
+}

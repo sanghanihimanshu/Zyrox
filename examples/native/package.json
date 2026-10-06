@@ -1,0 +1,26 @@
+{
+  "name": "@zyrox-examples/native",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "bundle:check": "expo export --platform android --platform ios --output-dir dist",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@zyrox-examples/components": "workspace:*",
+    "@zyrox/react": "workspace:*",
+    "expo": "57.0.26",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "@zyrox-examples/shop-api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "typescript": "6.0.3"
+  }
+}

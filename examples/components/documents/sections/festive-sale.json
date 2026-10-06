@@ -1,0 +1,141 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "sections/festive-sale",
+  "title": "Festive sale (feed section)",
+  "meta": {
+    "owner": "marketing",
+    "note": "Designed in the dashboard; the backend decides where and for whom it appears."
+  },
+  "params": {
+    "title": {
+      "type": "string",
+      "default": "Festive sale"
+    },
+    "code": {
+      "type": "string",
+      "default": "SALE"
+    },
+    "collection": {
+      "type": "string",
+      "default": "festive"
+    }
+  },
+  "state": {
+    "copied": false
+  },
+  "root": {
+    "id": "sale",
+    "type": "Card",
+    "motion": {
+      "enter": "fade"
+    },
+    "children": [
+      {
+        "id": "sale-badge",
+        "type": "Badge",
+        "props": {
+          "label": "Limited time",
+          "tone": "danger"
+        }
+      },
+      {
+        "id": "sale-title",
+        "type": "Text",
+        "props": {
+          "text": "{{ params.title }}",
+          "variant": "subtitle"
+        }
+      },
+      {
+        "id": "sale-code",
+        "type": "Text",
+        "props": {
+          "text": "Use code {{ params.code }} at checkout",
+          "tone": "muted"
+        }
+      },
+      {
+        "id": "sale-actions",
+        "type": "Stack",
+        "props": {
+          "direction": "row",
+          "gap": "sm"
+        },
+        "children": [
+          {
+            "id": "sale-shop",
+            "type": "Button",
+            "props": {
+              "label": "Shop now"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "track",
+                  "event": "promo_tap",
+                  "props": {
+                    "code": "{{ params.code }}"
+                  }
+                },
+                {
+                  "do": "navigate",
+                  "to": "shop-collection",
+                  "params": {
+                    "id": "{{ params.collection }}"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "sale-copy",
+            "type": "Button",
+            "props": {
+              "label": "{{ state.copied ? 'Copied ✓' : 'Copy code' }}",
+              "variant": "secondary"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "setState",
+                  "path": "copied",
+                  "value": true
+                },
+                {
+                  "do": "toast",
+                  "message": "Code {{ params.code }} copied",
+                  "tone": "success"
+                }
+              ]
+            }
+          },
+          {
+            "id": "sale-apply",
+            "type": "Button",
+            "props": {
+              "label": "Apply {{ params.code }}",
+              "variant": "secondary"
+            },
+            "on": {
+              "press": [
+                {
+                  "do": "request",
+                  "url": "/coupons/apply",
+                  "method": "POST",
+                  "body": {
+                    "code": "{{ params.code }}"
+                  },
+                  "onError": []
+                }
+              ]
+            },
+            "meta": {
+              "note": "Your API answers with $actions: a success toast, or an alert for invalid codes."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

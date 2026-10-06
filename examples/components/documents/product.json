@@ -1,0 +1,138 @@
+{
+  "zyrox": 1,
+  "kind": "screen",
+  "key": "product",
+  "title": "Product detail",
+  "params": { "id": { "type": "string", "required": true } },
+  "state": { "qty": 1, "adding": false, "gift": false },
+  "data": {
+    "product": {
+      "url": "/products/{{ params.id }}",
+      "mock": {
+        "id": "p1",
+        "name": "Trail Shoe",
+        "price": 129.5,
+        "currency": "USD",
+        "isNew": true,
+        "images": ["https://picsum.photos/seed/p1/800/600"],
+        "related": [{ "id": "p2", "name": "Sock", "price": 9 }, { "id": "p3", "name": "Cap", "price": 19 }]
+      }
+    }
+  },
+  "root": {
+    "id": "root",
+    "type": "Screen",
+    "props": { "title": "{{ data.product.name ?? 'Product' }}" },
+    "children": [
+      {
+        "id": "loading",
+        "type": "Text",
+        "if": "{{ loading.product }}",
+        "props": { "text": "Loading…", "tone": "muted" }
+      },
+      {
+        "id": "gallery",
+        "type": "Carousel",
+        "props": { "images": "{{ data.product.images }}" },
+        "fallback": {
+          "id": "hero",
+          "type": "Image",
+          "props": {
+            "src": "{{ data.product.images[0] }}",
+            "aspectRatio": 1.33,
+            "alt": "{{ data.product.name }}"
+          }
+        }
+      },
+      {
+        "id": "header",
+        "type": "Stack",
+        "props": { "direction": "row", "justify": "between", "align": "center" },
+        "children": [
+          {
+            "id": "name",
+            "type": "Text",
+            "props": { "text": "{{ data.product.name }}", "variant": "title" }
+          },
+          { "id": "new", "type": "Badge", "if": "{{ data.product.isNew }}", "props": { "label": "New" } }
+        ]
+      },
+      {
+        "id": "price",
+        "type": "Text",
+        "props": {
+          "text": "{{ format.currency(data.product.price * state.qty, data.product.currency) }}",
+          "variant": "subtitle"
+        }
+      },
+      { "id": "gift", "type": "Toggle", "props": { "label": "Gift wrap" }, "bind": "gift" },
+      {
+        "id": "qty-row",
+        "type": "Stack",
+        "props": { "direction": "row", "gap": "md", "align": "center" },
+        "children": [
+          {
+            "id": "qty-dec",
+            "type": "Button",
+            "props": { "label": "-", "variant": "secondary", "disabled": "{{ state.qty <= 1 }}" },
+            "on": { "press": [{ "do": "setState", "path": "qty", "value": "{{ state.qty - 1 }}" }] },
+            "a11y": { "label": "Decrease quantity" }
+          },
+          { "id": "qty", "type": "Text", "props": { "text": "{{ state.qty }}" } },
+          {
+            "id": "qty-inc",
+            "type": "Button",
+            "props": { "label": "+", "variant": "secondary" },
+            "on": { "press": [{ "do": "setState", "path": "qty", "value": "{{ state.qty + 1 }}" }] },
+            "a11y": { "label": "Increase quantity" }
+          }
+        ]
+      },
+      {
+        "id": "add",
+        "type": "Button",
+        "props": { "label": "Add {{ state.qty }} to cart", "loading": "{{ state.adding }}" },
+        "on": {
+          "press": [
+            { "do": "setState", "path": "adding", "value": true },
+            { "do": "addToCart", "productId": "{{ data.product.id }}", "qty": "{{ state.qty }}" },
+            { "do": "setState", "path": "adding", "value": false },
+            {
+              "do": "track",
+              "event": "add_to_cart",
+              "props": {
+                "productId": "{{ data.product.id }}",
+                "qty": "{{ state.qty }}",
+                "giftWrap": "{{ state.gift }}"
+              }
+            },
+            { "do": "toast", "message": "Added to cart", "tone": "success" }
+          ]
+        }
+      },
+      {
+        "id": "related-title",
+        "type": "Text",
+        "props": { "text": "You may also like", "variant": "subtitle" }
+      },
+      {
+        "id": "related",
+        "type": "List",
+        "props": { "items": "{{ data.product.related }}", "columns": 2 },
+        "templates": {
+          "item": {
+            "id": "related-card",
+            "type": "Card",
+            "props": { "title": "{{ item.name }}", "subtitle": "{{ format.currency(item.price, 'USD') }}" },
+            "on": { "press": [{ "do": "navigate", "to": "product", "params": { "id": "{{ item.id }}" } }] }
+          }
+        },
+        "slots": {
+          "empty": [
+            { "id": "related-empty", "type": "Text", "props": { "text": "Nothing related", "tone": "muted" } }
+          ]
+        }
+      }
+    ]
+  }
+}
