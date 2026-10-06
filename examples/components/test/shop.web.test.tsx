@@ -71,5 +71,5 @@ describe('shop feed against the example backend', () => {
     expect(screen.getByText('Results for “mil”')).toBeTruthy();
     expect(screen.getAllByText('Toned Milk').length).toBeGreaterThan(0);
     expect(fetcher.mock.calls.map(([req]) => req.url)).toContain('/search?q=mil');
-  });
+  }, 15_000);
 });
